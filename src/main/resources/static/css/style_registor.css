@@ -1,0 +1,22 @@
+body {
+	background-image:
+		url('D:\7th sem\ideas\financial-services-website-template\financial-services-website-template\financial-services-website-template\img\carousel-1.jpg');
+	/* Add the path to your background image */
+	background-size: cover;
+	background-position: center;
+}
+
+.form-container {
+	margin-top: 100px;
+	max-width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 30px;
+	background-color: rgba(255, 255, 255, 0.8);
+	border-radius: 10px;
+}
+
+.form-container h3 {
+	text-align: center;
+	margin-bottom: 20px;
+}

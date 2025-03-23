@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transport Allowance Calculator</title>
+    
+    <!-- Combined CSS -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .header {
+            background-color: #002d72;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        .header p {
+            font-size: 1.1em;
+        }
+
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px 0;
+        }
+
+        .eligibility, .calculator-section {
+            flex: 1;
+            margin: 10px;
+        }
+
+        .eligibility {
+            flex-basis: 30%;
+        }
+
+        .calculator-section {
+            flex-basis: 50%;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        p {
+            font-size: 1em;
+            color: #666;
+            line-height: 1.6em;
+        }
+
+        .calculator {
+            margin-bottom: 20px;
+        }
+
+        .calculator label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .calculator input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .calculator input[type="checkbox"] {
+            margin-right: 8px;
+            transform: scale(1.2); /* Increase size */
+            cursor: pointer; /* Change cursor */
+        }
+
+        .checkbox-label {
+            display: inline-flex;
+            align-items: center;
+            font-size: 1em; /* Adjust font size */
+        }
+
+        .calculator button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        .calculator button:hover {
+            background-color: #218838;
+        }
+
+        /* Right-side container for the results */
+        .result-container {
+            margin-left: auto;
+            margin-top: -100px;
+            flex-basis: 25%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Circular result styling */
+        .result-box {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: #eaf4ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-box:nth-child(1) {
+            background-color: #f0f5ff;
+        }
+
+        .result-box p {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .result-box h3 {
+            font-size: 2.2em;
+            color: #002d72;
+            margin: 0;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .eligibility, .calculator-section {
+                flex-basis: 100%;
+                margin: 10px 0;
+            }
+
+            .result-container {
+                margin-left: 0;
+                margin-top: 20px;
+                flex-basis: 100%;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .result-box {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .header p {
+                font-size: 1em;
+            }
+
+            h2 {
+                font-size: 1.3em;
+            }
+
+            .calculator button {
+                font-size: 1em;
+                padding: 8px 16px;
+            }
+
+            .result-box p {
+                font-size: 1em;
+            }
+
+            .result-box h3 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <h1>Transport Allowance Calculator</h1>
+            <p>Claim maximum tax benefits from the components available under your salary structure.</p>
+        </header>
+
+        <div class="content">
+            <!-- Eligibility Section -->
+            <section class="eligibility">
+                <h2>Who is eligible for Transport Allowance?</h2>
+                <p>Transport allowance is granted to employees to meet their expenditure on commuting between their residence and place of duty, and for employees working in the transport business.</p>
+            </section>
+
+            <!-- Calculator Section 
+            <section class="calculator-section">-->
+            
+                <form th:action="@{/transport-allowance-calculator}" th:object="${transportAllowanceCalculator}" method="post" class="calculator">
+                    <label for="yearlyTransportAllowance">Total Yearly Transport Allowance:</label>
+                    <input type="number" th:field="*{yearlyTransportAllowance}" required><br><br>
+
+                    <div class="checkbox-label">
+                        <input type="checkbox" th:field="*{handicapped}" id="isHandicapped">
+                        <label for="isHandicapped">Handicapped</label>
+                    </div><br><br>
+
+                    <button type="submit">Calculate</button>
+                </form>
+
+            <!-- Result Section (Shifted to the right) -->
+            <div class="result-section">
+                <div class="result-box">
+                    <p>Tax-Free Amount</p>
+                    <span>₹<span th:text="${taxFreeAmount}"></span></span>
+                </div>
+                <div class="result-box">
+                    <p>Taxable Transport Allowance</p>
+                    <span>₹<span th:text="${taxableAmount}"></span></span>
+                </div>
+        </div>
+    </div>
+
+</body>
+</html>

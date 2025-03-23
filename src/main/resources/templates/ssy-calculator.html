@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sukanya Samriddhi Yojana Calculator</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('your-background-image.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 50px auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .header {
+            background-color: #002d72;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        .header p {
+            font-size: 1.1em;
+        }
+
+        .content {
+            padding: 20px 0;
+        }
+
+        .eligibility {
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        p {
+            font-size: 1em;
+            color: #666;
+            line-height: 1.6em;
+        }
+
+        .calculator-section {
+            margin-bottom: 40px;
+        }
+
+        .calculator label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .calculator input[type="number"],
+        .calculator input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .calculator button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        .calculator button:hover {
+            background-color: #218838;
+        }
+
+        /* Result container in a single row */
+        .result-container {
+            display: flex;
+            flex-direction: row;  /* Ensure result boxes are in a row */
+            gap: 20px;            /* Spacing between the boxes */
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 50px; /* Margin at the bottom before the back button */
+            flex-wrap: nowrap;    /* Prevent wrapping */
+            overflow-x: auto;     /* Allow horizontal scroll if content overflows */
+        }
+
+        .result-box {
+            width: 180px; /* Increased size */
+            height: 180px; /* Increased size */
+            border-radius: 50%;
+            background: linear-gradient(145deg, #e0f7ff, #cce7ff);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 3px solid #b3e5fc;
+        }
+
+        .result-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .result-box p {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 0;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .result-box span {
+            font-size: 1.6em; /* Increased size for clarity */
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        /* Back to Calculator Button - Enhanced */
+        .back-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px; /* Smaller padding */
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em; /* Smaller text size */
+            display: block;
+            text-align: center;
+            width: 200px; /* Smaller button width */
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 20px; /* Space between results and button */
+            display: none; /* Initially hidden */
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .result-box {
+                width: 140px; /* Adjusted size for smaller screens */
+                height: 140px; /* Adjusted size for smaller screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .result-box p {
+                font-size: 1.1em;
+            }
+
+            .result-box span {
+                font-size: 1.3em;
+            }
+
+            .back-button {
+                font-size: 0.9em; /* Smaller font size */
+                padding: 8px 16px; /* Smaller padding */
+                width: 180px; /* Smaller button width */
+            }
+        }
+    </style>
+
+    <script>
+        function showCalculator() {
+            document.getElementById("result-section").style.display = 'none';
+            document.getElementById("calculator-section").style.display = 'block';
+            document.querySelector('.back-button').style.display = 'none'; // Hide the button on calculator page
+        }
+
+        function showResults() {
+            document.getElementById('result-section').style.display = 'flex';
+            document.getElementById('calculator-section').style.display = 'none';
+            document.querySelector('.back-button').style.display = 'block'; // Show back button
+            document.querySelector('.eligibility').style.display = 'none'; // Hide eligibility section
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <h1>Sukanya Samriddhi Yojana Calculator</h1>
+            <p>Calculate your investment, interest earned, and maturity amount under the Sukanya Samriddhi Yojana (SSY).</p>
+        </header>
+
+        <div class="content">
+            <!-- Eligibility Section -->
+            <section class="eligibility">
+                <h2>Who is eligible for SSY?</h2>
+                <p>Parents or guardians of a girl child below the age of 10 can open an SSY account for their child. The scheme allows deposits for up to 15 years from the date of opening.</p>
+            </section>
+
+            <!-- Calculator Section -->
+           <!-- <section id="calculator-section" class="calculator-section"> -->
+                <form th:action="@{/ssy-calculator}" th:object="${ssyDto}" method="post" onsubmit="showResults(); return false;" class="calculator">
+                    <label> Date of Birth:</label>
+                    <input type="date" th:field="*{dateOfBirth}" required>
+
+                    <label>Deposit Date:</label>
+                    <input type="date" th:field="*{depositDate}"  required>
+
+                    <label>Yearly Deposit Amount:</label>
+                    <input type="number" th:field="*{yearlyDepositAmount}" required>
+
+                    <button type="submit">Calculate</button>
+                </form>
+           
+
+            <!-- Result Section (Initially hidden) -->
+           <!--  <section id="result-section" class="result-container" style="display: none;"> -->
+           <div class="result-section"></div>
+                <div class="result-box">
+                    <p>Total Investment(Principal)</p>
+                    <span>₹<span th:text="${calculationResult.totalInvestment}"></span></span>
+                </div>
+                <div class="result-box">
+                    <p>Total Interest</p>
+                    <span>₹<span th:text="${calculationResult.totalInterest}"></span></span>
+                </div>
+                <div class="result-box">
+                    <p>Maturity Amount</p>
+                    <span>₹<span th:text="${calculationResult.maturityAmount}"></span></span>
+                </div>
+                <div class="result-box">
+                    <p>Maturity Date</p>
+                    <span><span th:text="${calculationResult.maturityDate}"></span>
+                </div>
+        </div>
+
+            <!-- Back to Calculator Button -->
+           <!--   <button class="back-button" onclick="showCalculator()">Back to Calculator</button> -->
+        </div>
+
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>House Property Calculator</title>
+<style>
+body {
+	font-family: 'Arial', sans-serif;
+	background: linear-gradient(135deg, #355efc 0%, #ACB6E5 100%);
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	color: #333;
+}
+
+.container {
+	background-color: #ffffff;
+	border-radius: 10px;
+	box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.1);
+	padding: 30px;
+	max-width: 450px;
+	width: 100%;
+	border-left: 5px solid #355efc;
+}
+
+h1 {
+	font-size: 1.8rem;
+	color: #355efc;
+	margin-bottom: 20px;
+	text-align: center;
+	font-weight: bold;
+}
+
+label {
+	font-weight: 600;
+	margin-bottom: 10px;
+	color: #555;
+	font-size: 1rem;
+	display: block;
+}
+
+.input-group {
+	position: relative;
+	margin-bottom: 20px;
+}
+
+.input-group input[type="text"] {
+	padding: 12px 15px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-size: 1rem;
+	width: 100%;
+	box-sizing: border-box;
+	outline: none;
+	transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-group input[type="text"]:focus {
+	border-color: #355efc;
+	box-shadow: 0px 0px 5px rgba(53, 94, 252, 0.2);
+}
+
+.input-group input[type="range"] {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 100%;
+	height: 8px;
+	background: #ddd;
+	border-radius: 5px;
+	outline: none;
+	opacity: 0.85;
+	transition: opacity 0.2s, background-color 0.3s;
+	margin-top: 10px;
+}
+
+.input-group input[type="range"]:hover {
+	background-color: #cfcfcf;
+}
+
+.input-group input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 20px;
+	height: 20px;
+	background: #355efc;
+	border-radius: 50%;
+	cursor: pointer;
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+	transition: background-color 0.3s, transform 0.3s;
+}
+
+.input-group input[type="range"]::-moz-range-thumb {
+	width: 20px;
+	height: 20px;
+	background: #355efc;
+	border-radius: 50%;
+	cursor: pointer;
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+	transition: background-color 0.3s, transform 0.3s;
+}
+
+.input-group input[type="range"]::-webkit-slider-thumb:hover {
+	transform: scale(1.1);
+}
+
+.tooltip {
+	position: absolute;
+	bottom: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: #555;
+	color: #fff;
+	padding: 5px 10px;
+	border-radius: 5px;
+	font-size: 0.9rem;
+	white-space: nowrap;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.3s, visibility 0.3s;
+}
+
+.input-group:hover .tooltip {
+	opacity: 1;
+	visibility: visible;
+}
+
+button {
+	padding: 12px 0;
+	background-color: #355efc;
+	border: none;
+	border-radius: 5px;
+	color: #fff;
+	font-size: 1.1rem;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background-color 0.3s, transform 0.3s;
+	text-align: center;
+	width: 100%;
+}
+
+button:hover {
+	background-color: #2a5298;
+	transform: translateY(-2px);
+}
+
+.result-section {
+	margin-top: 30px;
+}
+
+.result-box {
+	padding: 25px;
+	background-color: #eef;
+	border-radius: 5px;
+	text-align: center;
+	margin-top: 20px;
+	border: 1px solid #355efc;
+}
+
+.result-box p {
+	font-size: 1.3rem;
+	color: #333;
+	margin: 0;
+	font-weight: bold;
+}
+
+.result-box p span {
+	color: #355efc;
+	font-weight: bold;
+	font-size: 1.5rem;
+}
+
+.back-link {
+	display: block;
+	margin-top: 25px;
+	text-align: center;
+	font-size: 0.9rem;
+	color: #355efc;
+	text-decoration: none;
+	font-weight: 600;
+	transition: color 0.3s;
+}
+
+.back-link:hover {
+	color: #2a5298;
+}
+</style>
+<script>
+	function updateAnnualRent(val) {
+		document.getElementById('annualRent').value = val;
+		document.getElementById('annualRentTooltip').textContent = '₹' + val;
+	}
+
+	function updateRentSlider(val) {
+		document.getElementById('annualRentSlider').value = val;
+		document.getElementById('annualRentTooltip').textContent = '₹' + val;
+	}
+
+	function updateMunicipalTaxes(val) {
+		document.getElementById('municipalTaxes').value = val;
+		document.getElementById('municipalTaxesTooltip').textContent = '₹'
+				+ val;
+	}
+
+	function updateTaxesSlider(val) {
+		document.getElementById('municipalTaxesSlider').value = val;
+		document.getElementById('municipalTaxesTooltip').textContent = '₹'
+				+ val;
+	}
+
+	/*function updateStandardDeduction(val) {
+	    document.getElementById('standardDeduction').value = val;
+	    document.getElementById('standardDeductionTooltip').textContent = val + '%';
+	}
+
+	function updateDeductionSlider(val) {
+	    document.getElementById('standardDeductionSlider').value = val;
+	    document.getElementById('standardDeductionTooltip').textContent = val + '%';
+	}*/
+
+	function updateInterestOnLoan(val) {
+		document.getElementById('interestOnLoan').value = val;
+		document.getElementById('interestOnLoanTooltip').textContent = '₹'
+				+ val;
+	}
+
+	function updateInterestSlider(val) {
+		document.getElementById('interestOnLoanSlider').value = val;
+		document.getElementById('interestOnLoanTooltip').textContent = '₹'
+				+ val;
+	}
+</script>
+</head>
+<body>
+	<div class="container">
+		<h1>House Property Calculator</h1>
+		<form th:action="@{/house-property-calculator}"
+			th:object="${housePropertyCalculator}" method="post">
+			<label for="annualRent">Annual Rent:</label>
+			<div class="input-group">
+				<input type="text" id="annualRent" th:field="*{annualRent}"
+					placeholder="Enter amount" oninput="updateRentSlider(this.value)" />
+				<input type="range" id="annualRentSlider" name="annualRentSlider"
+					min="0" max="1000000" step="1000" value="50000"
+					oninput="updateAnnualRent(this.value)"
+					aria-label="Slide to select your annual rent">
+				<div class="tooltip" id="annualRentTooltip">₹50000</div>
+			</div>
+
+			<label for="municipalTaxes">Municipal Taxes:</label>
+			<div class="input-group">
+				<input type="text" id="municipalTaxes" th:field="*{municipalTaxes}"
+					placeholder="Enter amount" oninput="updateTaxesSlider(this.value)" />
+				<input type="range" id="municipalTaxesSlider"
+					name="municipalTaxesSlider" min="0" max="500000" step="1000"
+					value="25000" oninput="updateMunicipalTaxes(this.value)"
+					aria-label="Slide to select your municipal taxes">
+				<div class="tooltip" id="municipalTaxesTooltip">₹25000</div>
+			</div>
+
+			<label for="standardDeduction">Standard Deduction (%):</label>
+			<div class="input-group">
+				<input type="text" id="standardDeduction"
+					th:field="*{standardDeduction}" placeholder="Enter percentage"
+					readonly oninput="updateDeductionSlider(this.value)" /> <input
+					type="range" id="standardDeductionSlider"
+					name="standardDeductionSlider" min="0" max="100" step="1"
+					value="20" oninput="updateStandardDeduction(this.value)"
+					aria-label="Slide to select your standard deduction percentage">
+				<div class="tooltip" id="standardDeductionTooltip">20%</div>
+			</div>
+
+
+			<label for="interestOnLoan">Interest on Loan:</label>
+			<div class="input-group">
+				<input type="text" id="interestOnLoan" th:field="*{interestOnLoan}"
+					placeholder="Enter amount"
+					oninput="updateInterestSlider(this.value)" /> <input type="range"
+					id="interestOnLoanSlider" name="interestOnLoanSlider" min="0"
+					max="1000000" step="1000" value="100000"
+					oninput="updateInterestOnLoan(this.value)"
+					aria-label="Slide to select your interest on loan">
+				<div class="tooltip" id="interestOnLoanTooltip">₹100000</div>
+			</div>
+
+			<button type="submit">Calculate</button>
+		</form>
+
+		<div class="result-section">
+			<h1>House Property Result</h1>
+			<div class="result-box">
+				<p>
+					Your income from house property is: <span
+						th:text="${incomeFromHouseProperty}"></span>
+				</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

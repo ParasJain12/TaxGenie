@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRA Calculator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #355efc 0%, #ACB6E5 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 450px;
+            width: 100%;
+            border-left: 5px solid #355efc;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #355efc;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #555;
+            font-size: 1rem;
+            display: block;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group input[type="text"],
+        .input-group select {
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .input-group input[type="text"]:focus,
+        .input-group select:focus {
+            border-color: #355efc;
+            box-shadow: 0px 0px 5px rgba(53, 94, 252, 0.2);
+        }
+
+        .input-group input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #ddd;
+            border-radius: 5px;
+            outline: none;
+            opacity: 0.85;
+            transition: opacity 0.2s, background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .input-group input[type="range"]:hover {
+            background-color: #cfcfcf;
+        }
+
+        .input-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #355efc;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .input-group input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #355efc;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .input-group input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #555;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .input-group:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        button {
+            padding: 12px 0;
+            background-color: #355efc;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            text-align: center;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #2a5298;
+            transform: translateY(-2px);
+        }
+
+        .result-section {
+            margin-top: 30px;
+        }
+
+        .result-box {
+            padding: 25px;
+            background-color: #eef;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 20px;
+            border: 1px solid #355efc;
+        }
+
+        .result-box p {
+            font-size: 1.3rem;
+            color: #333;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .result-box p span {
+            color: #355efc;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #355efc;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #2a5298;
+        }
+    </style>
+    <script>
+        function updateBasicSalary(val) {
+            document.getElementById('basicSalary').value = val;
+            document.getElementById('basicSalaryTooltip').textContent = '₹' + val;
+        }
+
+        function updateSalarySlider(val) {
+            document.getElementById('basicSalarySlider').value = val;
+            document.getElementById('basicSalaryTooltip').textContent = '₹' + val;
+        }
+
+        function updateHRAReceived(val) {
+            document.getElementById('hraRecieved').value = val;
+            document.getElementById('hraReceivedTooltip').textContent = '₹' + val;
+        }
+
+        function updateHRAReceivedSlider(val) {
+            document.getElementById('hraReceivedSlider').value = val;
+            document.getElementById('hraReceivedTooltip').textContent = '₹' + val;
+        }
+
+        function updateRentPaid(val) {
+            document.getElementById('rentPaid').value = val;
+            document.getElementById('rentPaidTooltip').textContent = '₹' + val;
+        }
+
+        function updateRentPaidSlider(val) {
+            document.getElementById('rentPaidSlider').value = val;
+            document.getElementById('rentPaidTooltip').textContent = '₹' + val;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>HRA Calculator</h1>
+        <form th:action="@{/hra-calculator}" th:object="${hraCalculator}" method="post">
+            <label for="basicSalary">Basic Salary:</label>
+            <div class="input-group">
+                <input type="text" id="basicSalary" th:field="*{basicSalary}" placeholder="Enter amount" oninput="updateSalarySlider(this.value)" />
+                <input type="range" id="basicSalarySlider" name="basicSalarySlider" min="0" max="1000000" step="1000" value="50000" oninput="updateBasicSalary(this.value)" aria-label="Slide to select your basic salary">
+                <div class="tooltip" id="basicSalaryTooltip">₹50000</div>
+            </div>
+
+            <label for="hraRecieved">HRA Received:</label>
+            <div class="input-group">
+                <input type="text" id="hraRecieved" th:field="*{hraRecieved}" placeholder="Enter amount" oninput="updateHRAReceivedSlider(this.value)" />
+                <input type="range" id="hraReceivedSlider" name="hraReceivedSlider" min="0" max="500000" step="1000" value="25000" oninput="updateHRAReceived(this.value)" aria-label="Slide to select your HRA received">
+                <div class="tooltip" id="hraReceivedTooltip">₹25000</div>
+            </div>
+
+            <label for="rentPaid">Rent Paid:</label>
+            <div class="input-group">
+                <input type="text" id="rentPaid" th:field="*{rentPaid}" placeholder="Enter amount" oninput="updateRentPaidSlider(this.value)" />
+                <input type="range" id="rentPaidSlider" name="rentPaidSlider" min="0" max="500000" step="1000" value="30000" oninput="updateRentPaid(this.value)" aria-label="Slide to select your rent paid">
+                <div class="tooltip" id="rentPaidTooltip">₹30000</div>
+            </div>
+
+            <label for="cityType">City Type:</label>
+            <div class="input-group">
+                <select id="cityType" th:field="*{cityType}">
+                    <option value="metro">Metro</option>
+                    <option value="non-metro">Non-Metro</option>
+                </select>
+            </div>
+
+            <button type="submit">Calculate</button>
+        </form>
+
+        <div class="result-section">
+            <h1>HRA Result</h1>
+            <div class="result-box">
+                <p>Your HRA Exemption is: <span th:text="${hraExemption}"></span></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

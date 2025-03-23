@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Interest Calculator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #355efc 0%, #ACB6E5 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 450px;
+            width: 100%;
+            border-left: 5px solid #355efc;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #355efc;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #555;
+            font-size: 1rem;
+            display: block;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group input[type="text"] {
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .input-group input[type="text"]:focus {
+            border-color: #355efc;
+            box-shadow: 0px 0px 5px rgba(53, 94, 252, 0.2);
+        }
+
+        button {
+            padding: 12px 0;
+            background-color: #355efc;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            text-align: center;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #2a5298;
+            transform: translateY(-2px);
+        }
+
+        .result-section {
+            margin-top: 30px;
+        }
+
+        .result-box {
+            padding: 25px;
+            background-color: #eef;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 20px;
+            border: 1px solid #355efc;
+        }
+
+        .result-box p {
+            font-size: 1.3rem;
+            color: #333;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .result-box p span {
+            color: #355efc;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #355efc;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #2a5298;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Simple Interest Calculator</h1>
+        <form th:action="@{/simple-interest-calculator}" th:object="${simpleInterestCalculator}" method="post">
+            <label for="principal">Principal Amount:</label>
+            <div class="input-group">
+                <input type="text" id="principal" th:field="*{principal}" placeholder="Enter principal amount" />
+            </div>
+
+            <label for="rate">Rate of Interest (%):</label>
+            <div class="input-group">
+                <input type="text" id="rate" th:field="*{rate}" placeholder="Enter interest rate" />
+            </div>
+
+            <label for="time">Time (years):</label>
+            <div class="input-group">
+                <input type="text" id="time" th:field="*{time}" placeholder="Enter time in years" />
+            </div>
+
+            <button type="submit">Calculate</button>
+        </form>
+
+        <div class="result-section">
+            <h1>Simple Interest Result</h1>
+            <div class="result-box">
+                <p>Your Simple Interest is: <span th:text="${simpleInterest}"></span></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

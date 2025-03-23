@@ -1,0 +1,305 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cryptocurrency Tax Calculator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('your-background-image.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 50px auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px; /* Increased padding for container */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .header {
+            background-color: #002d72;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        /* Description below the header */
+        .description {
+            margin: 30px 0; /* Increased margin for description */
+            padding: 20px; /* Increased padding */
+            background: #e9f7fe;
+            border-left: 4px solid #007bff;
+            border-radius: 4px;
+            font-size: 1em;
+            color: #333;
+            line-height: 1.6em;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .calculator {
+            display: flex;
+            flex-direction: column;
+            gap: 40px; /* Increased gap between form groups */
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Increased gap between label and input */
+        }
+
+        label {
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Increased gap between range slider and input box */
+        }
+
+        .input-group input[type="range"] {
+            width: 60%;
+        }
+
+        .input-group input[type="number"] {
+            width: 30%;
+            padding: 10px; /* Slightly increased padding */
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .calculator button {
+            background-color: #28a745;
+            color: white;
+            padding: 14px 40px; /* Increased padding for button */
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1em;
+            align-self: center;
+            margin-top: 30px; /* Added more space above the button */
+        }
+
+        .calculator button:hover {
+            background-color: #218838;
+        }
+
+        .result-container {
+            display: flex;
+            flex-direction: row;
+            gap: 30px; /* Increased space between result boxes */
+            justify-content: center;
+            align-items: center;
+            margin: 50px 0; /* Added space above and below result section */
+            flex-wrap: wrap; /* Allow result boxes to wrap if needed */
+        }
+
+        .result-box {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #e0f7ff, #cce7ff);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 3px solid #b3e5fc;
+        }
+
+        .result-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .result-box p {
+            font-size: 1.3em; /* Slightly larger font for result label */
+            color: #333;
+            margin-bottom: 0;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .result-box span {
+            font-size: 1.8em; /* Slightly larger font for result value */
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .back-button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            width: 220px; /* Slightly larger button width */
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 30px; /* Added more space above the back button */
+            display: none;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .result-box {
+                width: 160px;
+                height: 160px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .result-box p {
+                font-size: 1.2em;
+            }
+
+            .result-box span {
+                font-size: 1.5em;
+            }
+
+            .back-button {
+                font-size: 0.9em;
+                padding: 8px 16px;
+                width: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header Section -->
+    <header class="header">
+        <h1>Cryptocurrency Tax Calculator</h1>
+    </header>
+
+    <!-- Description Section -->
+    <div class="description">
+        <p>This Cryptocurrency Tax Calculator helps you estimate the taxes on your crypto investments. 
+        Enter the purchase price and selling price of your cryptocurrency to calculate your taxable profit, tax, cess, and total tax liability. 
+        Please note that this tool is for informational purposes only and should not be considered as financial advice.</p>
+    </div>
+
+    <!-- Calculator Section -->
+    <div id="calculatorSection" class="calculator active">
+        <h2>Enter Your Details</h2>
+        <form th:action="@{/crypto-tax-calculator}" th:object="${cryptoTaxDTO}" method="post" onsubmit="showResult(); return false;">
+            <div class="form-group">
+                <label for="purchasePrice">Purchase Price:</label>
+                
+                    <input type="text" id="purchasePrice" th:field="*{purchasePrice}" required>
+            </div>
+            <div class="form-group">
+                <label for="sellingPrice">Selling Price:</label>
+                 <input type="text" id="sellingPrice" th:field="*{sellingPrice}" required>
+            </div>
+            <button type="submit">Calculate</button>
+        </form>
+    </div>
+
+    <!-- Result Section -->
+    <div class="result-section">
+        <div class="result-box">
+            <p>Purchase Price</p>
+            <span th:text="${taxResult.purchasePrice}"></span>
+        </div>
+        <div class="result-box">
+            <p>Selling Price</p>
+            <span th:text="${taxResult.sellingPrice}"></span>
+        </div>
+        <div class="result-box">
+            <p>Profit</p>
+            <span th:text="${taxResult.profit}"></span>
+        </div>
+        <div class="result-box">
+            <p>Tax (30%)</p>
+            <span th:text="${taxResult.tax}"></span>
+        </div>
+        <div class="result-box">
+            <p>Cess (4%)</p>
+            <span th:text="${taxResult.cess}"></span>
+        </div>
+        <div class="result-box">
+            <p>Total Tax Liability</p>
+            <span th:text="${taxResult.totalTaxLiability}"></span>
+        </div>
+    </div>
+
+    <button class="back-button" onclick="showCalculator()">Back to Calculator</button>
+</div>
+
+<!-- <script>
+    // Sync purchase price range and number inputs
+    const purchasePriceRange = document.getElementById('purchasePriceRange');
+    const purchasePriceNumber = document.getElementById('purchasePriceNumber');
+
+    purchasePriceRange.oninput = function () {
+        purchasePriceNumber.value = this.value;
+    }
+
+    purchasePriceNumber.oninput = function () {
+        purchasePriceRange.value = this.value;
+    }
+
+    // Sync selling price range and number inputs
+    /*const sellingPriceRange = document.getElementById('sellingPriceRange');
+    const sellingPriceNumber = document.getElementById('sellingPriceNumber');
+
+    sellingPriceRange.oninput = function () {
+        sellingPriceNumber.value = this.value;
+    }
+
+    sellingPriceNumber.oninput = function () {
+        sellingPriceRange.value = this.value;
+    }
+
+    function showResult() {
+        document.getElementById('calculatorSection').classList.remove('active');
+        document.getElementById('resultSection').style.display = 'flex';
+        document.querySelector('.back-button').style.display = 'block';
+    }
+
+    function showCalculator() {
+        document.getElementById('resultSection').style.display = 'none';
+        document.getElementById('calculatorSection').classList.add('active');
+        document.querySelector('.back-button').style.display = 'none';
+    }*/
+</script>
+-->
+</body>
+</html>
+
+       

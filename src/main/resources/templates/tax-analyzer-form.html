@@ -1,0 +1,333 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Analyzer</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .header {
+            background-color: #002d72;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        .description {
+            margin: 20px 0;
+            padding: 15px;
+            background: #e9f7fe;
+            border-left: 4px solid #007bff;
+            border-radius: 4px;
+            font-size: 1em;
+            color: #333;
+            line-height: 1.6em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .form-group input[type="number"], .form-group input[type="checkbox"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+
+        .form-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 5px;
+        }
+
+        .tooltip {
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            text-align: center;
+            font-weight: bold;
+            line-height: 20px;
+            font-size: 14px;
+            margin-left: 5px;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .boxed-section {
+            border: 2px solid #007BFF;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background-color: #f0f8ff;
+        }
+
+        .boxed-section h3 {
+            margin-top: 0;
+        }
+
+        button {
+            background-color: #007BFF;
+            width: 50%;
+            color: white;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .button-container {
+            text-align: center; /* Center align the button */
+            margin-top: 20px; /* Space above the button */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1> ITR Form Eligibility Checker</h1>
+            <p>Fill out the form below to determine your eligibility for various Income Tax Return (ITR) forms based on your income sources and financial details.</p>
+        </header>
+
+        <!-- Description -->
+        <div class="description">
+            <p>
+                The Income Tax Return (ITR) Form Eligibility Checker helps determine which ITR form you need to file based on your income sources and details. 
+                <br>Use this combined tool to ensure compliance with tax filing requirements and to estimate the appropriate tax deductions for various payments like salaries, interest, and more.
+            </p>
+        </div>
+
+        <form id="taxForm" action="#" th:action="@{/submit-input}" th:object="${userInputForm}" method="post">
+            <!-- Income Section -->
+            <h3>Income Details</h3>
+            <div class="form-group">
+                <label for="incomeFromSalary">Income from Salary:
+                    <span class="tooltip">i
+                        <span class="tooltip-text">Total salary income earned during the financial year.</span>
+                    </span>
+                </label>
+                <input type="number" id="incomeFromSalary" th:field="*{incomeFromSalary}" />
+                <div
+                   th:if="${#fields.hasErrors('incomeFromSalary')}" th:errors="*{incomeFromSalary}">
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label for="otherSourcesIncome">Other Sources Income:
+                    <span class="tooltip">i
+                        <span class="tooltip-text">Income from sources other than salary, such as interest.</span>
+                    </span>
+                </label>
+                <input type="number" id="otherSourcesIncome" th:field="*{otherSourcesIncome}" />
+                <div 
+                  th:if="${#fields.hasErrors('otherSourcesIncome')}" th:errors="*{otherSourcesIncome}">
+                </div>
+        
+            </div>
+            <div class="form-group">
+                <label for="businessIncome">Business Income:
+                    <span class="tooltip">i
+                        <span class="tooltip-text">Income generated from your business activities.</span>
+                    </span>
+                </label>
+                <input type="number" id="businessIncome" th:field="*{businessIncome}" />
+                <div th:if="${#fields.hasErrors('businessIncome')}" th:errors="*{businessIncome}"></div>
+            </div>
+            <div class="form-group">
+                <label for="capitalGains">Capital Gains:
+                    <span class="tooltip">i
+                        <span class="tooltip-text">Profits from the sale of capital assets.</span>
+                    </span>
+                </label>
+                <input type="number" id="capitalGains" th:field="*{capitalGains}" />
+                <div th:if="${#fields.hasErrors('capitalGains')}" th:errors="*{capitalGains}"></div>
+            </div>
+            <div class="form-group">
+                <label for="foreignIncome">Foreign Income:
+                    <span class="tooltip">i
+                        <span class="tooltip-text">Income earned from foreign sources.</span>
+                    </span>
+                </label>
+                <input type="number" id="foreignIncome" th:field="*{foreignIncome}" />
+                <div th:if="${#fields.hasErrors('foreignIncome')}" th:errors="*{foreignIncome}"></div>
+            </div>
+            <div class="form-group">
+                <label for="agriculturalIncome">Agricultural Income:
+                    <span class="tooltip">i
+                        <span class="tooltip-text">Income derived from agricultural activities.</span>
+                    </span>
+                </label>
+                <input type="number" id="agriculturalIncome" th:field="*{agriculturalIncome}" />
+                <div th:if="${#fields.hasErrors('agriculturalIncome')}" th:errors="*{agriculturalIncome}"></div>
+            </div>
+            <div class="form-group">
+                <label for="taxExemptions">Tax Exemptions:
+                    <span class="tooltip">i
+                        <span class="tooltip-text">Total amount of tax exemptions you are claiming.</span>
+                    </span>
+                </label>
+                <input type="number" id="taxExemptions" th:field="*{taxExemptions}" />
+                <div th:if="${#fields.hasErrors('taxExemptions')}" th:errors="*{taxExemptions}"></div>
+            </div>
+            <div class="form-group">
+                <label for="numberOfHouseProperties">Number of House Properties:
+                    <span class="tooltip">i
+                        <span class="tooltip-text">Total number of house properties owned.</span>
+                    </span>
+                </label>
+                <input type="number" id="numberOfHouseProperties" th:field="*{numberOfHouseProperties}" />
+                <div th:if="${#fields.hasErrors('numberOfHouseProperties')}" th:errors="*{numberOfHouseProperties}"></div>
+            </div>
+
+            <!-- Business Section (Boxed) -->
+            <div class="boxed-section">
+                <h3>Business Details</h3>
+                <div class="form-group">
+                    <label><input type="checkbox" th:field="*{partnerInFirm}" /> Are you a partner in a firm?
+                        <span class="tooltip">i
+                            <span class="tooltip-text">Indicate if you are a partner in any firm.</span>
+                        </span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label><input type="checkbox" th:field="*{underPresumptiveTaxation}" /> Under Presumptive Taxation?
+                        <span class="tooltip">i
+                            <span class="tooltip-text">Indicate if your income is under presumptive taxation.</span>
+                        </span>
+                    </label>
+                </div>
+                <h3>Select Business Type</h3>
+                <div class="form-group">
+                    <label><input type="checkbox" th:field="*{firm}" /> Firm
+                        <span class="tooltip">i
+                            <span class="tooltip-text">Indicate if your business is a firm.</span>
+                        </span>
+                    </label>
+                    <label><input type="checkbox" th:field="*{llp}" /> LLP
+                        <span class="tooltip">i
+                            <span class="tooltip-text">Indicate if your business is a Limited Liability Partnership.</span>
+                        </span>
+                    </label>
+                    <label><input type="checkbox" th:field="*{aop}" /> AOP
+                        <span class="tooltip">i
+                            <span class="tooltip-text">Indicate if your business is an Association of Persons.</span>
+                        </span>
+                    </label>
+                    <label><input type="checkbox" th:field="*{boi}" /> BOI
+                        <span class="tooltip">i
+                            <span class="tooltip-text">Indicate if your business is a Body of Individuals.</span>
+                        </span>
+                    </label>
+                    <label><input type="checkbox" th:field="*{company}" /> Company
+                        <span class="tooltip">i
+                            <span class="tooltip-text">Indicate if your business is a company.</span>
+                        </span>
+                    </label>
+                    <label><input type="checkbox" th:field="*{claimingExemptionUnderSection11}" /> Claiming Exemption under Section 11
+                        <span class="tooltip">i
+                            <span class="tooltip-text">Indicate if you are claiming an exemption under Section 11 of the Income Tax Act.</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Filing Requirements Section (Boxed) -->
+            <div class="boxed-section">
+                <h3>Required to file under Section</h3>
+                <div class="form-group">
+                    <label><input type="checkbox" th:field="*{requiredToFileUnderSection139_4A}" /> 139(4A)
+                        <span class="tooltip">i
+                            <span class="tooltip-text">Filing requirement under Section 139(4A) of the Income Tax Act.</span>
+                        </span>
+                    </label>
+                    <label><input type="checkbox" th:field="*{requiredToFileUnderSection139_4B}" /> 139(4B)
+                        <span class="tooltip">i
+                            <span class="tooltip-text">Filing requirement under Section 139(4B) of the Income Tax Act.</span>
+                        </span>
+                    </label>
+                    <label><input type="checkbox" th:field="*{requiredToFileUnderSection139_4C}" /> 139(4C)
+                        <span class="tooltip">i
+                            <span class="tooltip-text">Filing requirement under Section 139(4C) of the Income Tax Act.</span>
+                        </span>
+                    </label>
+                    <label><input type="checkbox" th:field="*{requiredToFileUnderSection139_4D}" /> 139(4D)
+                        <span class="tooltip">i
+                            <span class="tooltip-text">Filing requirement under Section 139(4D) of the Income Tax Act.</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="button-container">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

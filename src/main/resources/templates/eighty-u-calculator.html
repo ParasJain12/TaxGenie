@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>80U Calculator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex; /* Use flexbox for layout */
+            background-color: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 800px; /* Adjust width to fit both elements */
+            width: 100%;
+            margin: auto;
+        }
+
+        .form-section {
+            flex: 1; /* Allow form section to grow */
+            margin-right: 20px; /* Space between form and image */
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 30px;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .subheading {
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 18px;
+            color: #3b3b3b;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: #fff;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        select:hover {
+            border-color: #007bff;
+            background-color: #f4faff;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+        }
+
+        option {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            background-color: #007bff;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.02);
+        }
+
+        button:active {
+            background-color: #003f87;
+        }
+
+        .ad-section {
+            text-align: center;
+        }
+
+        .ad-section img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 10px;
+        }
+
+        /* Result section styles */
+        .result-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 550px;
+            width: 100%;
+            text-align: center; /* Center text in the container */
+            display: none; /* Hidden by default */
+        }
+
+        .result-amount {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff; /* Highlighted color for the deduction amount */
+        }
+
+        a {
+            display: inline-block; /* Display as a button */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #007bff;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none; /* Remove underline */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 20px; /* Add some space above the button */
+        }
+
+        a:hover {
+            background-color: #0056b3;
+            transform: scale(1.02);
+        }
+
+        a:active {
+            background-color: #003f87;
+        }
+        
+        .image-section {
+            margin-top: 20px; /* Space between text and image */
+        }
+
+        .image-section img {
+            width: 100%; /* Make the image responsive */
+            max-width: 300px; /* Set a max-width for the image */
+            border-radius: 10px; /* Round the corners of the image */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-section">
+            <h1>80U Calculator</h1>
+            <p class="subheading">Calculate ITR deductions for resident individuals who are disabled</p>
+
+            <form th:action="@{/eighty-u-calculator}" th:object="${eightyUCalculator}" method="post" onsubmit="return showResult();">
+                <!-- Financial Year Dropdown -->
+             
+
+                <!-- Status Dropdown -->
+                <label for="status">Status:</label>
+                <select th:field="*{status}" id="status">
+                    <option value="Resident Individuals">Resident Individuals</option>
+                    <option value="Others">Others</option>
+                </select>
+                <label for="disabilityPercentage">Percentage of Disability:</label>
+                <select th:field="*{disabilityPercentage}" id="disabilityPercentage">
+                    <option class="Dropdown" value="Normal">Normal (40% or more)</option>
+                    <option class="Dropdown" value="Severe">Severe (80% or more)</option>
+                </select>
+
+                <button type="submit">Calculate</button>
+            </form>
+        </div>
+
+        <!-- Ad Section -->
+        <div class="ad-section">
+            <img th:src="@{/img/taxu.jpeg}" src="../static/img/taxu.jpeg" alt="Tax Advisory Services">
+        </div>
+    </div>
+
+    <!-- Result Section -->
+    <div class="result-section">
+                <div class="result-box">
+                    <p>Deduction Amount</p>
+                    <span>₹<span th:text="${deduction}"></span></span>
+                </div>
+
+        <a href="eighty-u-calculator">Go Back</a>
+
+        <!-- Image Section -->
+        <div class="image-section">
+            <img th:src="@{/img/taxu.jpeg}" src="../static/img/taxu.jpeg" alt="Tax Advisory Services">
+        </div>
+    </div>
+
+    <script>
+        function showResult() {
+            // Assuming you handle form submission with AJAX and update the result here.
+            // Display the result section and hide the form section after submission.
+            document.querySelector('.container').style.display = 'none';
+            document.getElementById('resultContainer').style.display = 'block';
+            return false; // Prevent actual form submission for demo purposes
+        }
+    </script>
+</body>
+</html>

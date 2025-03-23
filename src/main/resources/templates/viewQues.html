@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaxGenie - FAQ Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Top Header Section - Restored to Normal Size */
+        .top-header {
+            background-color: #355efc;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-header .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+            /* text-transform: uppercase; */
+            /* letter-spacing: 2px; */
+            margin-right: auto;
+        }
+
+        .top-header nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 40px;
+        }
+
+        .top-header nav ul li {
+            display: inline-block;
+        }
+
+        .top-header nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .top-header nav ul li a:hover {
+            color: #ffd700;
+        }
+
+        .top-header .header-actions a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+            font-size: 1rem;
+            border: 2px solid transparent;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+
+        .top-header .header-actions a:hover {
+            border-color: #ffd700;
+            color: #ffd700;
+        }
+
+        /* FAQ Details Section - Smaller Text */
+        .faq-details-container {
+            margin: 40px auto;
+            padding: 30px;
+            width: 70%;
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-details-container h2 {
+            font-size: 1.8rem; /* Slightly reduced size */
+            font-weight: 700;
+            color: #355efc;
+            margin-bottom: 20px;
+            text-transform: capitalize;
+            letter-spacing: 1px;
+        }
+
+        .faq-details-container p {
+            font-size: 1rem; /* Smaller size for FAQ content */
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .faq-details-container .category {
+            font-size: 0.9rem; /* Smaller size for category */
+            font-weight: 600;
+            color: #888;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        /* Back Button */
+        .btn-back {
+            display: inline-block;
+            padding: 10px 25px;
+            font-size: 0.9rem; /* Smaller size for the button */
+            font-weight: 600;
+            background-color: #355efc;
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-back:hover {
+            background-color: #1e45d1;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: #355efc;
+            padding: 30px 0;
+            color: #fff;
+            font-size: 1rem;
+            text-align: center;
+            margin-top: 60px;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Header with Logo and Navigation -->
+    <div class="top-header">
+        <div class="logo">TaxGenie</div>
+        <nav>
+            <ul>
+                <li><a th:href="@{/}" href="index.html">Home</a></li>
+                <li><a th:href="@{/service}" href="service.html">Services</a></li>
+                <li><a th:href="@{/about}" href="about.html">About</a></li>
+                <li><a th:href="@{/contact}" href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="header-actions">
+            <a sec:authorize="isAnonymous()" th:href="@{/login}" href="#" >Sign In</a>
+        </div>
+        <div class="header-actions">
+            <a sec:authorize="isAuthenticated()" th:href="@{/logout}" href="#">Logout</a>
+        </div>
+    </div>
+
+    <!-- FAQ Details Section -->
+    <div class="faq-details-container">
+        <h2 th:text="${faq.ques}">What is the deadline for tax filing?</h2>
+        <p class="category" th:text="${faq.faqCategory.name}">General Questions</p>
+        <p th:text="${faq.answer}">The deadline for tax filing varies each year, but it typically falls on April 15th. Please check the latest updates from the IRS for any extensions.</p>
+
+        <!-- Back Button -->
+        <a href="@{/viewfaq}" class="btn-back">Back to FAQs</a>
+    </div>
+
+    <!-- Simple Footer Section -->
+    <footer>
+        <p>&copy; 2024 TaxGenie. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>

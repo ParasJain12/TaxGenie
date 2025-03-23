@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TDS Calculator</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('your-background-image.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 50px auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .header {
+            background-color: #002d72;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        .header p {
+            font-size: 1.1em;
+        }
+
+        .description {
+            margin: 20px 0;
+            padding: 15px;
+            background: #e9f7fe;
+            border-left: 4px solid #007bff;
+            border-radius: 4px;
+            font-size: 1em;
+            color: #333;
+            line-height: 1.6em;
+        }
+
+        .content {
+            padding: 20px 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group select {
+            height: auto; /* Allow height to be controlled by content */
+            max-height: 100px; /* Set a maximum height */
+            overflow-y: auto; /* Enable vertical scrolling if content exceeds max-height */
+        }
+
+        .button-group {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .result-container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+        }
+
+        .result-box {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #e0f7ff, #cce7ff);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 3px solid #b3e5fc;
+        }
+
+        .result-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .result-box p {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 0;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .result-box span {
+            font-size: 1.6em;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        /* Back to Calculator Button */
+        .back-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            display: block;
+            text-align: center;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            display: none;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>TDS Calculator</h1>
+            <p>Calculate your Tax Deducted at Source (TDS) for various payments under different sections.</p>
+        </header>
+
+        <!-- Description Section -->
+        <div class="description">
+            <p>
+                The Tax Deducted at Source (TDS) Calculator helps you determine the amount of tax to be deducted at source for different types of payments. TDS is a specific amount that is deducted when a payment is made, ensuring that tax is collected in advance from the income of the payee.
+                <br><br>
+                Use this calculator to select the nature of payment and the payment amount to estimate the TDS amount. This is applicable for various categories like salaries, interest on securities, dividends, winnings from lotteries, rent payments, and more.
+            </p>
+        </div>
+
+        <div class="content">
+            <!-- Calculator Section -->
+           <!--  <section id="calculator-section" class="calculator-section">  -->
+               <form th:action="@{/tds-calculator}" th:object="${tdsAmount}" method="post"> 
+                    <div class="form-group">
+                        <label for="amountOfPayment">Amount of Payment:</label>
+                        <input type="number" id="amountOfPayment" name="amountOfPayment" step="0.01" required>
+                   </div>
+
+                    <div class="form-group">
+                        <label for="natureOfPayment">Nature of Payment:</label>
+                        <select id="natureOfPayment" name="natureOfPayment" required>
+                            <option value="">---Select---</option>
+                            <option value="Section 192A">Section 192A - Payment of accumulated PF balance to an employee</option>
+                            <option value="Section 193">Section 193 - Interest on Securities</option>
+                            <option value="Section 194">Section 194 - Dividend other than the Dividend as referred to in Section 115-0</option>
+                            <option value="Section 194A">Section 194A - Interest other than Banks</option>
+                            <option value="Section 194A">Section 194A - Interest from Banks</option>
+                            <option value="Section 194B">Section 194B - Winnings from Lotteries</option>
+                            <option value="Section 194BB">Section 194BB - Winnings from Horse Races</option>
+                            <option value="Section 194C">Section 194C - Payment to Contractor/Sub-Contractor (Single)</option>
+                            <option value="Section 194J">Section 194J - Fees for Professional Services</option>
+                            <option value="Section 194D">Section 194D - TDS on insurance commission</option>
+                            <option value="Section 194DA">Section 194DA - TDS on Payment in Respect of Life Insurance Policy</option>
+                            <option value="Section 194H">Section 194H - Commission or Brokerage</option>
+                            <option value="Section 194I(a)">Section 194I(a) - Rent on Plant & Machinery</option>
+                            <option value="Section 194I(b)">Section 194I(b) - Rent on Land & building or Furniture & Fitting</option>
+                            <option value="Section 194IA">Section 194IA - Payment on transfer of certain Immovable Property</option>
+                            <option value="Section 194IB">Section 194IB - Rent Payment to Landlord by Individuals</option>
+                            <option value="Section 194K">Section 194K - TDS on income from mutual fund units (Dividend income)</option>
+                        </select>
+                    </div>
+
+                 <div class="button-group">
+                        <button type="submit">Calculate TDS</button>
+                  </div>
+                </form>
+            
+
+            <!-- Result Section -->
+        <!--      <div id="result-section" class="result-section" style="display: none;">
+                <div class="result-box">
+                    <p>Total TDS Amount</p>
+                    <span th:text="${tdsAmount}"></span>
+                </div>
+            </div>
+            -->
+            <div class="result-section">
+            <h1>TDS Result</h1>
+            <div class="result-box">
+                <p>The TDS is: <span th:text="${tdsAmount}"></span></p>
+            </div>
+          </div>
+
+            <!-- Back to Calculator Button -->
+           <!--   <button class="back-button" onclick="showCalculator()">Back to Calculator</button> -->
+        </div>
+    </div>
+</body>
+</html>

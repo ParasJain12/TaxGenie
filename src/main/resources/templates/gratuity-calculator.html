@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gratuity Calculator and Result</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+            background-image: radial-gradient(circle, rgba(53, 94, 252, 0.1) 1px, transparent 1px), 
+                              radial-gradient(circle, rgba(53, 94, 252, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Top Header Section */
+        .top-header {
+            background-color: #355efc;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-header .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+            margin-right: auto;
+        }
+
+        .top-header nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 40px;
+        }
+
+        .top-header nav ul li {
+            display: inline-block;
+        }
+
+        .top-header nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .top-header nav ul li a:hover {
+            color: #ffd700;
+        }
+
+        footer {
+            background-color: #355efc;
+            padding: 20px 0;
+            color: #fff;
+            font-size: 1rem;
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Gratuity Calculator Section -->
+    <div class="container">
+        <h2 class="mt-4">Gratuity Calculator</h2>
+        <form th:action="@{/gratuity-calculator}" th:object="${gratuityInput}" method="post">
+            <div class="form-group">
+                <label for="employmentType">Employment Type</label>
+                <select id="employmentType" class="form-control" th:field="*{employmentType}">
+                    <option value="">--Select Employment Type--</option>
+                    <option value="Government">Government or Local Authorities</option>
+                    <option value="Gratuity Act Applies">Gratuity Act Applies</option>
+                    <option value="Gratuity Act Does Not Apply">Gratuity Act Does Not Apply</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="basicPay">Basic Pay (₹)</label>
+                <input type="number" id="basicPay" class="form-control" th:field="*{basicPay}" min="0" required>
+            </div>
+            <div class="form-group">
+                <label for="dearnessAllowance">Dearness Allowance (₹)</label>
+                <input type="number" id="dearnessAllowance" class="form-control" th:field="*{dearnessAllowance}" min="0" required>
+            </div>
+            <div class="form-group">
+                <label for="yearsOfService">Years of Service</label>
+                <input type="number" id="yearsOfService" class="form-control" th:field="*{yearsOfService}" min="0" required>
+            </div>
+            <div class="form-group">
+                <label for="gratuityReceived">Gratuity Received (₹)</label>
+                <input type="number" id="gratuityReceived" class="form-control" th:field="*{gratuityReceived}" min="0" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Calculate Gratuity</button>
+        </form>
+
+        <!-- Gratuity Calculation Result Section -->
+        <div class="container mt-4" th:if="${result != null}">
+            <h2 class="mt-4">Gratuity Calculation Result</h2>
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">Calculation Details</h5>
+                    <p class="card-text"><strong>Exempted Gratuity: </strong>₹<span th:text="${result.exemptedGratuity}"></span></p>
+                    <p class="card-text"><strong>Taxable Gratuity: </strong>₹<span th:text="${result.taxableGratuity}"></span></p>
+                </div>
+            </div>
+            <a href="/gratuity-calculator" class="btn btn-primary mt-3">Calculate Again</a>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+.form-container {
+	width: 50%;
+	padding: 40px;
+	background:
+		url("D:\7th sem\ideas\financial-services-website-template\financial-services-website-template\financial-services-website-template\img\carousel-1.jpg")
+		no-repeat center center; /* Add your image path */
+	background-size: cover;
+	margin: auto;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container form {
+	background: rgba(255, 255, 255, 0.9);
+	padding: 30px;
+	border-radius: 10px;
+}
+
+.form-container h2 {
+	font-size: 36px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.form-group {
+	margin-bottom: 20px;
+}
+
+.form-group input {
+	width: 100%;
+	padding: 15px;
+	font-size: 16px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+}
+
+.loginBtn {
+	width: 100%;
+	padding: 15px;
+	font-size: 18px;
+	border-radius: 5px;
+}
+
+.register-link {
+	text-align: center;
+	margin-top: 15px;
+}
+
+.footer {
+	padding: 20px 0;
+}
+
+.footer .container {
+	padding: 20px 0;
+}
+
+.footer .row>div {
+	margin-bottom: 15px;
+}
+
+.footer .btn-square {
+	width: 30px;
+	height: 30px;
+	font-size: 14px;
+	line-height: 30px;
+}

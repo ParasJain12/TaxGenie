@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TaxGenie - Tax Management Website</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="keywords">
+<meta content="" name="description">
+
+<!-- Favicon -->
+<link th:href="@{/img/favicon.ico}" href="../static/img/favicon.ico"
+	rel="icon">
+
+<!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap"
+	rel="stylesheet">
+
+<!-- Icon Font Stylesheet -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+	rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+	rel="stylesheet">
+
+<!-- Libraries Stylesheet -->
+<link th:href="@{/lib/animate/animate.min.css}"
+	href="../static/lib/animate/animate.min.css" rel="stylesheet">
+<link th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}"
+	href="../static/lib/owlcarousel/assets/owl.carousel.min.css"
+	rel="stylesheet">
+
+<!-- Customized Bootstrap Stylesheet -->
+<link th:href="@{/css/bootstrap.min.css}"
+	href="../static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Template Stylesheet -->
+<link th:href="@{/css/style.css}" href="../static/css/style.css"
+	rel="stylesheet">
+
+<!-- Additional Styles for Dictionary -->
+<style>
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f9f9f9;
+	color: #333;
+}
+
+.letter-section {
+	margin-bottom: 40px;
+}
+
+.letter-section h2 {
+	font-size: 24px;
+	margin-bottom: 15px;
+	color: #0275d8;
+}
+
+.term-list {
+	columns: 3; /* This will make a 3-column layout */
+	-webkit-columns: 3;
+	-moz-columns: 3;
+}
+
+.term-list li {
+	margin-bottom: 10px;
+	cursor: pointer;
+	color: #0275d8;
+}
+
+.term-list li:hover {
+	text-decoration: underline;
+}
+
+.definition-modal {
+	margin-top: 50px;
+}
+
+.alphabet-nav {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.alphabet-nav button {
+	margin: 2px;
+	padding: 10px;
+}
+
+.dictionary-section {
+	padding-top: 20px;
+}
+
+.intro-text {
+	padding-top: 80px;
+	/* Adjust this value to avoid overlapping with the navbar */
+	text-align: center;
+	margin-bottom: 30px;
+}
+</style>
+</head>
+<body>
+	<!-- Spinner Start -->
+	<div id="spinner"
+		class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+		<div class="spinner-border text-primary" role="status"
+			style="width: 3rem; height: 3rem;"></div>
+	</div>
+	<!-- Spinner End -->
+
+	<!-- Navbar Start -->
+	<div class="container-fluid fixed-top px-0 wow fadeIn"
+		data-wow-delay="0.1s">
+		<nav
+			class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn"
+			data-wow-delay="0.1s">
+			<a th:href="@{/index}" href="index.html"
+				class="navbar-brand ms-4 ms-lg-0">
+				<h1 class="display-5 text-primary m-0">TaxGenie</h1>
+			</a>
+			<button type="button" class="navbar-toggler me-4"
+				data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarCollapse">
+				<div class="navbar-nav ms-auto p-4 p-lg-0">
+					<a th:href="@{/index}" href="index.html"
+						class="nav-item nav-link active">Home</a> <a th:href="@{/about}"
+						href="about.html" class="nav-item nav-link">About</a>
+					<div class="nav-item dropdown">
+						<a href="#" class="nav-link dropdown-toggle"
+							data-bs-toggle="dropdown">Services</a>
+						<div class="dropdown-menu border-light m-0">
+							<a th:href="@{/tax-saving}"
+								href="tax-saving.html" class="dropdown-item">Tax
+								Saving Analyzer</a> <a th:href="@{/debt_management}"
+								href="debt_management.html" class="dropdown-item">Debt
+								Management</a>
+						</div>
+					</div>
+					<div class="nav-item dropdown">
+						<a href="#" class="nav-link dropdown-toggle"
+							data-bs-toggle="dropdown">Tools</a>
+						<div class="dropdown-menu border-light m-0">
+							<a th:href="@{/income-tax-calculator}"
+								href="income-tax-calculator.html" class="dropdown-item">Income
+								Tax Calculator</a> <a th:href="@{/hra-calculator}"
+								href="hra-calculator.html" class="dropdown-item">HRA
+								Calculator</a> <a th:href="@{/eightyC-calculator}"
+								href="eightyC-calculator.html" class="dropdown-item">80C
+								Calculator</a> <a th:href="@{/crypto-tax-calculator}"
+								href="crypto-tax-calculator.html" class="dropdown-item">Cryptocurrency
+								Tax Calculator</a> <a th:href="@{/simple-interest-calculator}"
+								href="simple-interest-calculator.html" class="dropdown-item">Simple
+								Interest Calculator</a> <a th:href="@{/eightyDD-calculator}"
+								href="eightyDD-calculator.html" class="dropdown-item">80DD
+								Calculator</a> <a th:href="@{/compound-interest-calculator}"
+								href="compound-interest-calculator.html" class="dropdown-item">Compound
+								Interest Calculator</a> <a th:href="@{/ssy-calculator}"
+								href="ssy-calculator.html" class="dropdown-item">Sukanya
+								Samriddhi Yojana Calculator</a> <a th:href="@{/gratuity-calculator}"
+								href="gratuity-calculator.html" class="dropdown-item">Gratuity
+								Calculator</a> <a th:href="@{/tds-calculator}"
+								href="tds-calculator.html" class="dropdown-item">TDS
+								Calculator</a> <a th:href="@{/transport-allowance-calculator}"
+								href="transport-allowance-calculator.html" class="dropdown-item">Transport
+								Allowance Calculator</a> <a th:href="@{/house-property-calculator}"
+								href="house-property-calculator.html" class="dropdown-item">House
+								Property Calculator</a> <a th:href="@{/eighty-tta-calculator}"
+								href="eighty-tta-calculator.html" class="dropdown-item">80TTA
+								Calculator</a> <a th:href="@{/eighty-u-calculator}"
+								href="eighty-u-calculator.html" class="dropdown-item">80U
+								Calculator</a> <a th:href="@{/old-vs-new-tax-slab-calculator}"
+								href="old-vs-new-tax-slab-calculator.html" class="dropdown-item">Old
+								vs New Tax Slab Regime Calculator</a>
+						</div>
+					</div>
+
+					<div class="nav-item dropdown">
+						<a href="#" class="nav-link dropdown-toggle"
+							data-bs-toggle="dropdown">Resource</a>
+						<div class="dropdown-menu border-light m-0">
+							<a th:href="@{/viewfaq}" href="viewfaq.html"
+								class="dropdown-item">FAQ</a> <a th:href="@{/tax_glossary}"
+								href="tax_glossary.html" class="dropdown-item">Tax Glossary</a>
+							<a th:href="@{/news}"
+								href="news.html" class="dropdown-item">News</a> <a
+								th:href="@{/viewcasestudy}" href="viewcasestudy.html"
+								class="dropdown-item">Guide</a>
+						</div>
+					</div>
+					<a th:href="@{/contact}" href="contact.html"
+						class="nav-item nav-link">Contact</a>
+					<div class="nav-item dropdown">
+						<a href="#" class="nav-link dropdown-toggle"
+							data-bs-toggle="dropdown">Join Us</a>
+						<div class="dropdown-menu border-light m-0">
+							<a sec:authorize="isAnonymous()" th:href="@{/login}"
+								href="login.html" class="dropdown-item">Sign-In</a> <a
+								th:href="@{/register}" href="register.html"
+								class="dropdown-item">Sign-Up</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+	</div>
+	<!-- Navbar End -->
+
+	<!-- Introductory Text -->
+	<div class="intro-text">
+		<h1>Tax Dictionary - Know the meaning of tax jargons</h1>
+		<p>Understanding tax terms can make dealing with them less
+			stressful. Use TaxGenie Tax Dictionary to help clarify any confusion
+			while filing income tax.</p>
+	</div>
+
+	<!-- Alphabet Navigation -->
+	<div class="alphabet-nav">
+		<!-- JavaScript will generate the buttons A to Z -->
+	</div>
+
+	<div class="container dictionary-section">
+		<div id="dictionaryContent">
+			<!-- Content Sections (A, B, C...) will be generated by JavaScript -->
+		</div>
+	</div>
+
+	<!-- Modal for Definition -->
+	<div class="modal fade" id="definitionModal" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Term Definition</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body" id="modalBody">
+					<!-- Definition will be injected here by JavaScript -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer Start -->
+	<div
+		class="container-fluid bg-dark text-light footer mt-5 py-5 wow fadeIn"
+		data-wow-delay="0.1s">
+		<div class="container py-5">
+			<div class="row g-5">
+				<div class="col-lg-3 col-md-6">
+					<h4 class="text-white mb-4">Our Office</h4>
+					<p class="mb-2">
+						<i class="fa fa-map-marker-alt me-3"></i>Indore
+					</p>
+					<p class="mb-2">
+						<i class="fa fa-phone-alt me-3"></i>+012 345 67890
+					</p>
+					<p class="mb-2">
+						<i class="fa fa-envelope me-3"></i>TaxGenie@example.com
+					</p>
+					<div class="d-flex pt-2">
+						<a class="btn btn-square btn-outline-light rounded-circle me-2"
+							href=""><i class="fab fa-twitter"></i></a> <a
+							class="btn btn-square btn-outline-light rounded-circle me-2"
+							href=""><i class="fab fa-facebook-f"></i></a> <a
+							class="btn btn-square btn-outline-light rounded-circle me-2"
+							href=""><i class="fab fa-youtube"></i></a> <a
+							class="btn btn-square btn-outline-light rounded-circle me-2"
+							href=""><i class="fab fa-linkedin-in"></i></a>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<h4 class="text-white mb-4">Services</h4>
+					<a class="btn btn-link" th:href="@{/tax-analyzer}" href="tax-analyzer-form.html">Choose ITR Form you should File</a> <a
+						class="btn btn-link" th:href="@{/tax-regime-form}" href="tax-regime-form.html">Choose Old or New Tax Regime</a> 
+						<a class="btn btn-link" th:href="@{/viewcasestudy}" href="viewcasestudy.html">Guides/Blogs</a> 
+						<a class="btn btn-link" href="">Debt Management</a>
+						<a class="btn btn-link" th:href="@{/news}" href="news.html">News</a>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<h4 class="text-white mb-4">Quick Links</h4>
+					<a class="btn btn-link" th:href="@{/about}" href="about.html">About Us</a> <a
+						class="btn btn-link" th:href="@{/contact}" href="contact.html">Contact Us</a> <a
+						class="btn btn-link" th:href="@{/service}" href="service.html">Our Services</a> <a
+						class="btn btn-link" href="">Terms & Condition</a> <a
+						class="btn btn-link" href="">Support</a>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<h4 class="text-white mb-4">Newsletter</h4>
+					<p>Subscribe for expert financial tips, updates, and insights
+						directly to your inbox.</p>
+					<div class="position-relative w-100">
+						<input class="form-control bg-white border-0 w-100 py-3 ps-4 pe-5"
+							type="text" placeholder="Your email">
+						<button type="button"
+							class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer End -->
+
+	<!-- Copyright Start -->
+	<div class="container-fluid copyright py-4">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+					&copy; <a class="border-bottom" href="#">TaxGenie</a>, All Rights
+					Reserved.
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Copyright End -->
+
+	<!-- Back to Top -->
+	<a href="#"
+		class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
+		class="bi bi-arrow-up"></i></a>
+
+	<!-- JavaScript Libraries -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script th:src= "@{/lib/wow/wow.min.js}" src="../static/lib/wow/wow.min.js"></script>
+	<script th:src= "@{/lib/easing/easing.min.js}" src="../static/lib/easing/easing.min.js"></script>
+	<script th:src= "@{/lib/waypoints/waypoints.min.js}" src="../static/lib/waypoints/waypoints.min.js"></script>
+	<script th:src= "@{/lib/owlcarousel/owl.carousel.min.js}" src="../static/lib/owlcarousel/owl.carousel.min.js"></script>
+	<script th:src= "@{/lib/counterup/counterup.min.js}" src="../static/lib/counterup/counterup.min.js"></script>
+
+	<!-- Template Javascript -->
+	<script th:src= "@{/js/main.js}" src="../static/js/main.js"></script>
+
+	<!-- Custom Script for Dictionary -->
+	<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const terms = {
+                "A": [
+                    { term: "Aadhaar", definition: "The Aadhaar is a 12-digit unique identification number issued by the Unique Identification Authority of India (UIDAI). It serves as a proof of identity and address for residents of India. The Aadhaar number is linked to an individual’s biometric and demographic data, making it a robust and reliable form of identification." },
+                    { term: "Absorption Costing", definition: "Absorption costing is a method of costing that includes all costs, both fixed and variable, in the cost of a product." },
+                    { term: "Acceptance", definition: "What It is, Explanation, Example" },
+                    { term: "Accounting", definition: "Definition & Advantages of Accounting | What is Accounting?" },
+                    { term: "Accounting Cycle", definition: "The accounting cycle is the collective process of recording and processing the accounting events of a company." },
+                    { term: "Accounting Principles", definition: "Accounting principles are the rules and guidelines that companies must follow when reporting financial data." },
+                    { term: "Accrual Accounting", definition: "Accrual accounting is an accounting method where revenue and expenses are recorded when they are earned, regardless of when the cash is actually received or paid." },
+                    { term: "Accrued Income", definition: "What is Accrued Income, Examples, Advantages" },
+                    { term: "Accumulated Depreciation", definition: "Definition & Advantages of Accumulated Depreciation" },
+                    { term: "Acid Test Ratio", definition: "The acid-test ratio is a strong indicator of whether a firm has sufficient short-term assets to cover its immediate liabilities." },
+                    { term: "Acquisition", definition: "Definition & Advantages of Acquisition" },
+                    { term: "Advance Payment", definition: "An advance payment is a type of payment made ahead of its normal schedule." },
+                    { term: "Advance Tax", definition: "What is Advance Tax, Eligibility, Benefits" },
+                    { term: "Affiliate Marketing", definition: "What it is and how it works" },
+                    { term: "Allotment", definition: "Allotment is the process of assigning shares to shareholders." },
+                    { term: "Altcoin", definition: "Altcoins are cryptocurrencies other than Bitcoin." },
+                    { term: "Amalgamation", definition: "Definition & Advantages of Amalgamation | What is Amalgamation?" },
+                    { term: "Anchoring", definition: "Definition, How it Works, and Example" },
+                    { term: "Annual Budget", definition: "An annual budget is a plan for the government's revenues and expenditures for a fiscal year." },
+                    { term: "Apportionment", definition: "Apportionment is the process of dividing and distributing something according to a plan or formula." },
+                    { term: "Appreciation", definition: "Definition, How it Works, and Appreciation vs Depreciation" },
+                    { term: "Artificial Intelligence", definition: "Definition, How it Works" },
+                    { term: "Assessee", definition: "Assessee Meaning, Types" },
+                    { term: "Assessment Year (AY)", definition: "Meaning, Example" },
+                    { term: "Asset", definition: "An asset is any resource owned by an individual or business that is expected to provide future economic benefits." },
+                    { term: "ATM Card", definition: "Definition & Advantages of ATM Card | What is ATM Card?" },
+                    { term: "Audit Trail", definition: "An audit trail is a step-by-step record by which accounting data can be traced to their source." },
+                    { term: "Austerity", definition: "Austerity refers to a set of economic policies a government implements to control public sector debt." },
+                    { term: "Authorised Capital", definition: "Authorized capital is the maximum amount of share capital that a company is authorized to issue to shareholders." },
+                    { term: "Average Cost", definition: "Average cost is the total cost of production divided by the number of units produced." },
+                    { term: "Average Propensity to Consume", definition: "The average propensity to consume is the proportion of income that is spent on consumption." }
+                ],
+                "B": [
+                    { term: "Backward Integration", definition: "What is Backward Integration, its Benefits, and example" },
+                    { term: "Bad Debt", definition: "Bad debt is an amount owed to a company that is unlikely to be paid." },
+                    { term: "Balance of Trade", definition: "The balance of trade is the difference between the value of a country's imports and exports." },
+                    { term: "Balance Sheet", definition: "Definition, How it Works and Components" },
+                    { term: "Bancassurance", definition: "Bancassurance is the selling of life assurance and other insurance products and services by banking institutions." },
+                    { term: "Banking", definition: "What is Banking, How it Works, Types" },
+                    { term: "Barcode", definition: "Definition, How it Works, and Types" },
+                    { term: "Barter System", definition: "The barter system is an old method of exchange." },
+                    { term: "Base Year", definition: "The base year is the year used for comparison in the measure of a business activity or economic index." },
+                    { term: "Basel III", definition: "Basel III is a set of international banking regulations developed by the Basel Committee on Banking Supervision." },
+                    { term: "Bear Hug", definition: "What is Bear Hug, Explanation, and Example" },
+                    { term: "Bear", definition: "What is Bear in Stock Market, How Bear Profits, and Bearish Characteristics" },
+                    { term: "Below Poverty Line (BPL)", definition: "What is BPL, Features, Advantages" },
+                    { term: "Beneficial Owner", definition: "A beneficial owner is a person who enjoys the benefits of ownership even though the title to some form of property is in another name." },
+                    { term: "Beneficiary", definition: "A beneficiary is a person who derives advantage from something, especially a trust, will, or life insurance policy." },
+                    { term: "Beta", definition: "What it is, How it is used by Investors, and Values of Beta" },
+                    { term: "Bill Of Entry", definition: "Definition & Advantages of Bill Of Entry | What is Bill Of Entry?" },
+                    { term: "Bill Of Exchange", definition: "What is Bill Of Exchange?, Definition & Advantages" },
+                    { term: "Binary Option", definition: "What is binary option, binary option in India, and example" },
+                    { term: "Bitcoin", definition: "Definition and How Bitcoin Mining Works" },
+                    { term: "Block", definition: "Definition & Advantages of Block | What is Block?" },
+                    { term: "Bonus Issue", definition: "A bonus issue is an offer of free additional shares to existing shareholders." },
+                    { term: "Book Building", definition: "Definition & Advantages of Book Building" },
+                    { term: "Boot", definition: "Definition & Advantages of Boot | What is Boot?" },
+                    { term: "Bubble", definition: "What it is and How it Works" },
+                    { term: "Budget Deficit", definition: "What is Budget Deficit, Formula, Types" },
+                    { term: "Bull Market", definition: "A bull market is a market in which share prices are rising, encouraging buying." },
+                    { term: "Bull", definition: "Definition, Explanation, and Characteristics" },
+                    { term: "Bureaucracy", definition: "Bureaucracy is a system of government in which most of the important decisions are made by state officials rather than by elected representatives." },
+                    { term: "Business Cycle", definition: "The business cycle is the cycle of economic expansion and contraction." },
+                    { term: "Business Economics", definition: "Business economics is the study of the financial issues and challenges faced by corporations." },
+                    { term: "Business", definition: "Definition, How Business Works, and Types" },
+                    { term: "Buyback", definition: "What is Buyback, Types, Specifications" }
+                ],
+                "C": [
+                    { term: "Cag Comptroller And Auditor General Of India", definition: "The Comptroller and Auditor General (CAG) of India is an authority, established by the Constitution of India, who audits all receipts and expenditure of the Government of India and the state governments." },
+                    { term: "Call Money", definition: "Call money is a short-term finance repayable on demand, with a maturity period of one day to fifteen days." },
+                    { term: "Capital", definition: "Capital is wealth in the form of money or other assets owned by a person or organization." },
+                    { term: "Capital Account", definition: "Definition & Advantages of Capital Account | What is a Capital Account?" },
+                    { term: "Capital Adequacy Ratio", definition: "The capital adequacy ratio is the ratio of a bank's capital to its risk." },
+                    { term: "Capital Expenses", definition: "Capital expenses are funds used by a company to acquire, upgrade, and maintain physical assets such as property, industrial buildings, or equipment." },
+                    { term: "Capital Formation", definition: "Capital formation is a term used to describe the net capital accumulation during an accounting period for a particular country." },
+                    { term: "Capital Gain", definition: "Capital gain is the profit earned from the sale of an asset, such as stocks, bonds, or real estate." },
+                    { term: "Capital Gearing", definition: "Capital gearing refers to the ratio of debt to equity in the capital structure of a firm." },
+                    { term: "Capital Investment", definition: "Capital investment is funds invested in a firm or enterprise for the purpose of furthering its business objectives." },
+                    { term: "Capital Rationing", definition: "Capital rationing is the process of allocating limited capital resources to the most beneficial projects or investments." },
+                    { term: "Capital Structure", definition: "Capital structure is the particular combination of debt, equity, and other sources of financing that a company uses to fund its overall operations and growth." },
+                    { term: "Capitalize", definition: "What is Capitalize, Explanation, and Benefits" },
+                    { term: "Cash Book", definition: "Definition & Advantages of Cash Book | What is a Cash Book?" },
+                    { term: "Cash Cow", definition: "A cash cow is a business or product that provides a steady, reliable source of income or profit." },
+                    { term: "Cash Credit", definition: "Definition & Advantages of Cash Credit | What is Cash Credit?" },
+                    { term: "Cash Equivalents", definition: "What is Cash Equivalents, Types, and Impact on the company" },
+                    { term: "Cash Transaction", definition: "What is Cash Transaction?, Definition & Examples" },
+                    { term: "Caveat Emptor", definition: "Caveat emptor is Latin for 'let the buyer beware.'" },
+                    { term: "CCI (Competition Commission of India)", definition: "The Competition Commission of India (CCI) is a statutory body of the Government of India responsible for enforcing the Competition Act, 2002." },
+                    { term: "Ceteris Paribus", definition: "What is Ceteris Paribus, Explanation" },
+                    { term: "Chapter VI-A", definition: "What is Chapter VI-A, Sections, Deductions" },
+                    { term: "Cheque", definition: "Definition & Advantages of Cheque | What is a Cheque?" },
+                    { term: "CIF Number", definition: "CIF stands for Customer Information File, which is a unique number assigned by the bank to its customers." },
+                    { term: "Claim Settlement Ratio", definition: "What is Claim Settlement Ratio, Calculator, and Importance" },
+                    { term: "Classical Economics", definition: "Classical economics is a school of thought in economics that originated in the late 18th century and emphasizes the importance of free markets and limited government intervention." },
+                    { term: "Closed Economy", definition: "A closed economy is an economy that does not interact with other economies in the world." },
+                    { term: "Commercial Property", definition: "Commercial property refers to real estate intended for use by for-profit businesses." },
+                    { term: "Company", definition: "A company is a legal entity formed by a group of individuals to engage in and operate a business—commercial or industrial—enterprise." },
+                    { term: "Company Limited By Shares", definition: "Definition & Advantages of Company Limited By Shares" },
+                    { term: "Complementary Goods", definition: "Complementary goods are products that are typically consumed together." },
+                    { term: "Compound Interest", definition: "What it is and the Formula of Compound Interest" },
+                    { term: "Computation of Income", definition: "What is Computation of Income, Example" },
+                    { term: "Conglomerate", definition: "Definition & Advantages of Conglomerate | What is Conglomerate?" },
+                    { term: "Consolidated Fund of India", definition: "The Consolidated Fund of India is the most important of all government accounts and is the chief source of the government’s spending." },
+                    { term: "Consumer Goods", definition: "Consumer goods are products bought for consumption by the average consumer." },
+                    { term: "Consumerism", definition: "Consumerism is a social and economic order that encourages the acquisition of goods and services in ever-increasing amounts." },
+                    { term: "Continentals", definition: "Definition and Explanation" },
+                    { term: "Convertible Debenture", definition: "A convertible debenture is a type of long-term debt issued by a company that can be converted into equity shares of the company after a specific period." },
+                    { term: "Conveyance", definition: "What is Conveyance, Types, and Example" },
+                    { term: "Copyright", definition: "Definition and How it Works" },
+                    { term: "Corporate Debt Restructuring", definition: "Corporate Debt Restructuring (CDR) is a mechanism adopted to support the genuine efforts of viable companies to restructure their debts." },
+                    { term: "Corporate Finance", definition: "Corporate finance refers to the financial activities related to running a corporation, typically with a division or department set up to oversee those financial activities." },
+                    { term: "Corporate Tax", definition: "Corporate tax is a direct tax imposed on the net income or profit of corporations and other entities from their businesses." },
+                    { term: "Corporation", definition: "Definition, How it Works, and Types of Corporations in India" },
+                    { term: "Corpus", definition: "Definition & Advantages of Corpus | What is Corpus?" },
+                    { term: "Cost Accounting", definition: "Definition, Examples, Types" },
+                    { term: "Cost of Capital", definition: "The cost of capital is the return a company needs to achieve in order to justify the cost of a capital project, such as buying new equipment or building a new factory." },
+                    { term: "Cost Of Debt", definition: "Cost of debt is the effective rate that a company pays on its borrowed funds from financial institutions and other sources." },
+                    { term: "Cost Of Labour", definition: "Definition, Types, Formula" },
+                    { term: "Cover", definition: "Definition and How it Works" },
+                    { term: "Credit and Debt", definition: "Credit is the trust which allows one party to provide resources to another party where that second party does not reimburse the first party immediately but arranges either to repay or return those resources at a later date." },
+                    { term: "Credit Card", definition: "Definition & Advantages of Credit Card | What is Credit Card?" },
+                    { term: "Credit Money", definition: "Definition & Advantages of Credit Money | What is Credit Money?" },
+                    { term: "Credit Risk", definition: "Credit risk is the possibility of a loss resulting from a borrower's failure to repay a loan or meet contractual obligations." },
+                    { term: "Cross", definition: "Definition, How it Works," },
+                    { term: "Cryptocurrency", definition: "Definition, How it works, and legal status in India" },
+                    { term: "CTS Cheque Truncation System", definition: "Definition, Process, Benefits" },
+                    { term: "Currency", definition: "Definition and the Origin of the Currency" },
+                    { term: "Custodian", definition: "A custodian is a financial institution that holds customers' securities for safekeeping to minimize the risk of their theft or loss." },
+                    { term: "Customer", definition: "Definition, Explanation, and Types of Customers" },
+                    { term: "Cyclical Unemployment", definition: "Cyclical unemployment is the component of overall unemployment that results directly from cycles of economic upturn and downturn." }
+                ],
+                "D": [
+                    { term: "Data Analytics", definition: "Definition and Process" },
+                    { term: "Data Science", definition: "Definition and Life Cycle" },
+                    { term: "Dealer", definition: "A dealer is a person or company that buys and sells goods, currency, or securities." },
+                    { term: "Debit", definition: "Definition & Advantages of Debit | What is Debit?" },
+                    { term: "Debit Note", definition: "Definition & Advantages of Debit Note" },
+                    { term: "Debt", definition: "Definition & Advantages of Debt" },
+                    { term: "Debt service coverage ratio (DSCR)", definition: "The debt service coverage ratio is a measure of the cash flow available to pay current debt obligations." },
+                    { term: "Debtor", definition: "A debtor is an individual or institution that owes a sum of money." },
+                    { term: "Deferred Compensation", definition: "Deferred compensation is an arrangement in which a portion of an employee's income is paid out at a later date after which the income was earned." },
+                    { term: "Deferred Revenue", definition: "Deferred revenue refers to payments received in advance for services or goods yet to be delivered or provided." },
+                    { term: "Deficit", definition: "A deficit occurs when expenses exceed revenues, imports exceed exports, or liabilities exceed assets." },
+                    { term: "Defunct", definition: "Defunct is a term used to indicate that an entity or organization no longer exists or operates." },
+                    { term: "Delivery Trading", definition: "Definition & Advantages of Delivery Trading" },
+                    { term: "Demand Deposit", definition: "What Is Demand Deposit" },
+                    { term: "Demand Draft", definition: "A demand draft is a negotiable instrument similar to a bill of exchange." },
+                    { term: "Demand Schedule", definition: "A demand schedule is a table that shows the quantity demanded of a good or service at different price levels." },
+                    { term: "Demographic Dividend", definition: "The demographic dividend is the economic growth potential that can result from shifts in a population’s age structure." },
+                    { term: "Demonetization", definition: "Demonetization is the act of stripping a currency unit of its status as legal tender." },
+                    { term: "Depletion", definition: "Depletion is an accounting and tax concept used most often in the mining, timber, petroleum, or other similar industries." },
+                    { term: "Deposition", definition: "A deposition is the out-of-court oral testimony of a witness that is reduced to writing for later use in court or for discovery purposes." },
+                    { term: "Depreciation", definition: "Depreciation is the process of allocating the cost of a tangible asset over its useful life." },
+                    { term: "Depressed", definition: "What it is, Explanation, and Cause of Depression in Economy" },
+                    { term: "Derived Demand", definition: "Derived demand is a term in economics that describes the demand for a good or service that results from the demand for another good or service." },
+                    { term: "Devaluation", definition: "Devaluation is the deliberate downward adjustment of the value of a country's money relative to another currency, group of currencies, or standard." },
+                    { term: "Digital Marketing", definition: "Definition and the Types of Digital Marketing Channels" },
+                    { term: "Direct Cost", definition: "A direct cost is a price that can be directly tied to the production of specific goods or services." },
+                    { term: "Direct Tax", definition: "What is Direct Tax?, Definition & Advantages of Direct Tax" },
+                    { term: "Disbursement", definition: "Disbursement is the payment of money from a fund." },
+                    { term: "Disguised Unemployment", definition: "Definition, its Causes, Impact and Forms of Disguised Unemployment" },
+                    { term: "Disinvestment", definition: "Disinvestment is the action of an organization or government selling or liquidating an asset or subsidiary." },
+                    { term: "Dispersion in Investment", definition: "Definition & Advantages of Dispersion | What is Dispersion?" },
+                    { term: "Distribution Channel", definition: "A distribution channel is a chain of businesses or intermediaries through which a good or service passes until it reaches the final buyer or the end consumer." },
+                    { term: "Divestment", definition: "Divestment is the action or process of selling off subsidiary business interests or investments." },
+                    { term: "Dividend Payout Ratio", definition: "The dividend payout ratio is the fraction of net income a firm pays to its stockholders in dividends." },
+                    { term: "Double Taxation", definition: "Double taxation is a tax principle referring to income taxes paid twice on the same source of earned income." },
+                    { term: "Dumping", definition: "What is dumping, Dumping in Indian Economics, and Types" }
+                ],
+                "E": [
+                    { term: "e-Verify", definition: "What is e-Verify, Benefits" },
+                    { term: "Earnest Money", definition: "Definition & Advantages of Earnest Money | What is Earnest Money?" },
+                    { term: "Earning Yield", definition: "What is earning yield, how it works, and how it helps investors" },
+                    { term: "Earnings Per Share", definition: "Earnings per share (EPS) is a financial ratio, which divides net earnings available to common shareholders by the average outstanding shares over a certain period." },
+                    { term: "Easement", definition: "Definition & Advantages of Easement" },
+                    { term: "Ebitda Margin", definition: "Ebitda margin is a measure of a company's operating profit as a percentage of its revenue." },
+                    { term: "Economically Weaker Section (EWS)", definition: "What is Economically Weaker Section (EWS)?" },
+                    { term: "Economics", definition: "Definition and Importance of Economics" },
+                    { term: "ECS (Electronic Clearance Service)", definition: "ECS is an electronic mode of funds transfer from one bank account to another." },
+                    { term: "eKharid", definition: "eKharid is a digital platform for farmers to sell their produce." },
+                    { term: "Elasticity Of Demand", definition: "Definition & Advantages of Elasticity Of Demand | What is Elasticity Of Demand?" },
+                    { term: "EMI", definition: "Equated Monthly Installment (EMI) is a fixed payment amount made by a borrower to a lender at a specified date each calendar month." },
+                    { term: "Emolument", definition: "Emolument refers to the salary, fee, or profit from employment or office." },
+                    { term: "EMV", definition: "EMV is a global standard for credit and debit payment cards based on chip card technology." },
+                    { term: "Encumbrance", definition: "An encumbrance is a claim against a property by a party that is not the owner." },
+                    { term: "Entrepreneur", definition: "Definition and How Entrepreneur Works" },
+                    { term: "EPFiGMS", definition: "EPFiGMS is an online facility by the EPFO to lodge grievances related to EPF." },
+                    { term: "EPS (Earnings Per Share)", definition: "Earnings per share (EPS) is a financial ratio, which divides net earnings available to common shareholders by the average outstanding shares over a certain period." },
+                    { term: "Equity", definition: "Equity is the value of an asset less the value of all liabilities on that asset." },
+                    { term: "Escalator Clause", definition: "What is an Escalator Clause, How it works, and Types" },
+                    { term: "Ex Gratia Payment", definition: "Definition & Advantages of Ex Gratia Payment | What is Ex Gratia Payment?" },
+                    { term: "Exempt Income", definition: "What is Exempt Income? & Eligibility" },
+                    { term: "Expansionary Fiscal Policy", definition: "Expansionary fiscal policy is a form of fiscal policy that involves decreasing taxes, increasing government expenditures, or both to fight recessionary pressures." },
+                    { term: "Expenses", definition: "Expenses are the costs that a business incurs through its operations to earn revenue." },
+                    { term: "Explicit Costs", definition: "Explicit costs are direct, out-of-pocket payments for expenses like wages, rent, and materials." },
+                    { term: "Expropriation", definition: "What is Expropriation, Challenge, and Implications" },
+                    { term: "Externality", definition: "An externality is a cost or benefit for a third party who did not agree to it." }
+                ],
+                "F": [
+                    { term: "FAANG", definition: "FAANG is an acronym referring to the stocks of five major American technology companies: Facebook, Amazon, Apple, Netflix, and Google." },
+                    { term: "Face Value", definition: "Definition & Advantages of Face Value | What is Face Value?" },
+                    { term: "Fastag", definition: "Fastag is a rechargeable tag that automatically deducts toll charges while your vehicle is moving." },
+                    { term: "Fear and Greed Index", definition: "The Fear and Greed Index is a tool used to gauge the emotions that drive investors." },
+                    { term: "Felony", definition: "What is felony, classification of felony" },
+                    { term: "Fiat Money", definition: "Fiat money is government-issued currency that isn't backed by a physical commodity like gold or silver, but rather by the government that issued it." },
+                    { term: "Fiduciary Meaning", definition: "A fiduciary is a person or organization that acts on behalf of another person or persons to manage assets." },
+                    { term: "Finance", definition: "Finance is the management of large amounts of money, especially by governments or large companies." },
+                    { term: "Financial Accounting", definition: "What is Financial Accounting?, Definition & Types" },
+                    { term: "Financial Analysis", definition: "Financial analysis is the process of evaluating businesses, projects, budgets, and other finance-related transactions." },
+                    { term: "Financial Crisis", definition: "A financial crisis is a situation where the value of assets drops rapidly and is often triggered by a panic or a run on banks." },
+                    { term: "Financial Fraud", definition: "Financial fraud occurs when someone takes money or other assets from you through deception or criminal activity." },
+                    { term: "Financial Instrument", definition: "A financial instrument is a real or virtual document representing a legal agreement involving some sort of monetary value." },
+                    { term: "Financial Intermediary", definition: "A financial intermediary is an entity that acts as the middleman between two parties in a financial transaction." },
+                    { term: "Financial Literacy", definition: "Financial literacy is the ability to understand and effectively use various financial skills, including personal financial management, budgeting, and investing." },
+                    { term: "Financial Risk", definition: "Financial risk is the possibility of losing money on an investment or business venture." },
+                    { term: "Financial Sector", definition: "What is financial sector, Explanation, and Classification" },
+                    { term: "Financial Statements", definition: "Financial statements are written records that convey the business activities and the financial performance of a company." },
+                    { term: "Financial System", definition: "The financial system is a set of institutions, such as banks, insurance companies, and stock exchanges, that permit the exchange of funds." },
+                    { term: "Financial Technology", definition: "Financial technology, often referred to as fintech, is the technology and innovation that aims to compete with traditional financial methods in the delivery of financial services." },
+                    { term: "Fiscal Policy", definition: "Fiscal policy is the use of government spending and taxation to influence the economy." },
+                    { term: "Fixed Cost", definition: "Fixed costs are those that do not change with the level of output produced by the business." },
+                    { term: "Fixed Exchange Rate", definition: "A fixed exchange rate is a country's exchange rate regime under which the government or central bank ties the official exchange rate to another country's currency or the price of gold." },
+                    { term: "Flipping", definition: "Definition, Risk of Flipping & How Does it Work | What is Flipping?" },
+                    { term: "FMCG Products", definition: "Definition & Advantages of FMCG Products | What are FMCG Products?" },
+                    { term: "Focused Fund", definition: "A focused fund is a type of mutual fund that holds a relatively small number of stocks in its portfolio." },
+                    { term: "Foreign Exchange Market", definition: "The foreign exchange market, also known as forex, is a global decentralized market for the trading of currencies." },
+                    { term: "Forensic Audit", definition: "A forensic audit is an examination and evaluation of a firm's or individual's financial information for use as evidence in court." },
+                    { term: "Forfeited Share", definition: "A forfeited share is a share in a company that the owner loses due to failure to meet purchasing requirements." },
+                    { term: "Forfeiture", definition: "Forfeiture is the loss of any property without compensation as a penalty for illegal actions." },
+                    { term: "Form 16", definition: "Form 16 is a certificate issued by an employer to its employees under section 203 of the Income-tax Act, 1961 for tax deducted at source (TDS) from salary." },
+                    { term: "Form 26AS", definition: "Form 26AS is a consolidated tax statement that provides details of tax deducted on your income and deposited by the deductor with the Income Tax Department." },
+                    { term: "FPO", definition: "Full Form - Definition & Advantages of FPO" },
+                    { term: "Frictional Unemployment", definition: "Frictional unemployment is the unemployment that exists in any economy due to people being in the process of moving from one job to another." },
+                    { term: "Front Office", definition: "The front office is the part of a company that comes in contact with clients, including the marketing, sales, and service departments." },
+                    { term: "Futures", definition: "Definition, How it Works, and Difference between Futures and Options" }
+                ],
+                "G": [
+                    { term: "GBP", definition: "Definition & Advantages of GBP| What is GBP?" },
+                    { term: "GDP Deflator", definition: "The GDP deflator is a measure of price inflation, calculated as the ratio of nominal GDP to real GDP." },
+                    { term: "Gemini Exchange", definition: "Definition, How it Works, and How to Trade on Gemini" },
+                    { term: "GIC", definition: "Full Form - Guaranteed Investment Certificate - Definition & Advantages of GIC" },
+                    { term: "Giffen Goods", definition: "Giffen goods are goods that have an upward-sloping demand curve, which violates the basic law of demand in economics." },
+                    { term: "Gig Economy", definition: "The gig economy is a free market system in which temporary positions are common and organizations hire independent workers for short-term commitments." },
+                    { term: "Global Innovation Index", definition: "What is Global Innovation Index, and How it Works" },
+                    { term: "Government And Policy", definition: "Government and policy refer to the governing body of a nation, state, or community and the principles, rules, and laws it establishes." },
+                    { term: "Gray Market", definition: "What is gray market, How it works, and How IPO shares are traded" },
+                    { term: "Grey Market", definition: "A grey market (also spelled gray market) is the trade of a commodity through distribution channels that are legal but unintended by the original manufacturer." },
+                    { term: "Gross Total Income", definition: "Gross total income refers to the total income earned by an individual from all sources before deductions under various sections of the Income Tax Act." },
+                    { term: "Gross Working Capital", definition: "Gross working capital is the sum of a company's current assets (assets that are convertible to cash within a year or less)." },
+                    { term: "GST", definition: "Goods and Services Tax (GST) is an indirect tax used in India on the supply of goods and services." }
+                ],               
+                "H": [
+                    { term: "Hard Stop", definition: "A hard stop is a predetermined level of risk at which an investor will close out a position or stop a trading strategy." },
+                    { term: "Harmonic Mean", definition: "The harmonic mean is a type of average, often used in finance to average multiples like the price-to-earnings ratio." },
+                    { term: "Historical Cost", definition: "Historical cost is the original monetary value of an asset." },
+                    { term: "Holding Company", definition: "Definition & Advantages of Holding Company | What is a Holding Company?" },
+                    { term: "Horizontal Line", definition: "Definition, Explanation & Use of Horizontal Line | What is Horizontal Line?" },
+                    { term: "Hostile Takeover", definition: "What is Hostile Takeover, How it Works" },
+                    { term: "Hyperinflation", definition: "Hyperinflation is an extremely high and typically accelerating inflation." },
+                    { term: "Hypermarket", definition: "A hypermarket is a large retail space that combines a supermarket and a department store." }
+                ],
+
+
+                "I": [
+                    { term: "IFFCO", definition: "Indian Farmers Fertilizer Cooperative Limited is a multi-state cooperative society engaged in the business of manufacturing and marketing fertilizers." },
+                    { term: "Imperfect Competition", definition: "Imperfect competition refers to market structures that fall between perfect competition and monopoly." },
+                    { term: "Implicit Cost", definition: "Implicit costs are the opportunity costs of using resources owned by the company." },
+                    { term: "Implied Contract", definition: "Definition & Advantages of Implied Contract | What is Implied Contract?" },
+                    { term: "Import Duty", definition: "Import duty is a tax collected on imports and some exports by a country's customs authorities." },
+                    { term: "Imprest", definition: "Definition & Advantages of Imprest | What is Imprest?" },
+                    { term: "Income", definition: "Income is money that an individual or business receives in exchange for providing a good or service or through investing capital." },
+                    { term: "Income Elasticity of Demand", definition: "Income elasticity of demand measures how the quantity demanded of a good changes in response to a change in income." },
+                    { term: "Income Tax", definition: "Income tax is a tax imposed on individuals or entities in respect of the income or profits earned by them." },
+                    { term: "Income Tax Rate", definition: "The income tax rate is the percentage at which an individual or corporation is taxed." },
+                    { term: "Income Tax Refund", definition: "An income tax refund is a reimbursement to a taxpayer of any excess amount paid to the federal or state government." },
+                    { term: "Income Tax Return", definition: "An income tax return is a form on which a taxpayer makes an annual statement of income and personal circumstances." },
+                    { term: "Incumbent", definition: "An incumbent is the current holder of a political office or position." },
+                    { term: "Independent Contractor", definition: "An independent contractor is a person or entity contracted to perform work for—or provide services to—another entity as a non-employee." },
+                    { term: "Indexing", definition: "Definition and How it Works" },
+                    { term: "India VIX", definition: "Definition & Advantages of India VIX | What is India VIX?" },
+                    { term: "Indifference Curve", definition: "An indifference curve is a graph showing different bundles of goods between which a consumer is indifferent." },
+                    { term: "Indirect Tax", definition: "What is Indirect Tax?, Definition & Types" },
+                    { term: "Industrialization", definition: "What It Is?, Advantages & Disadvantages" },
+                    { term: "Industry", definition: "Definition, Classification, and How Investors Use Industry" },
+                    { term: "Inferior Goods", definition: "Inferior goods are goods that see a decrease in demand as consumer incomes rise." },
+                    { term: "Inflation Accounting", definition: "Inflation accounting is a type of accounting that adjusts financial statements to reflect inflation." },
+                    { term: "Inflation", definition: "Definition, Its Impact on Indian Consumers, and What Causes Inflation" },
+                    { term: "Inflationary Gap", definition: "An inflationary gap is a macroeconomic concept that measures the difference between the actual level of GDP and the potential GDP." },
+                    { term: "Insurable Interest", definition: "Insurable interest is a stake in the value of an entity or event for which an insurance policy is purchased." },
+                    { term: "Insurance Grace Period", definition: "An insurance grace period is an additional time granted by the insurer for the payment of an overdue premium." },
+                    { term: "Interest", definition: "Definition, Functions, and What is Interest Rate?" },
+                    { term: "Interim Dividend", definition: "Definition & Advantages of Interim Dividend | What is Interim Dividend?" },
+                    { term: "Internal Audit", definition: "Definition & Advantages of Internal Audit | What is Internal Audit?" },
+                    { term: "Intrinsic Value", definition: "Intrinsic value is the actual value of a company or an asset based on an underlying perception of its true value." },
+                    { term: "Investing", definition: "Definition, Types of Investing" },
+                    { term: "Investment", definition: "Investment is the action or process of investing money for profit or material result." },
+                    { term: "Investment Banking", definition: "Investment banking is a segment of banking that deals with capital creation for other companies, governments, and other entities." },
+                    { term: "Invisible Trade", definition: "What is Invisible Trade, Explanation, and Example" },
+                    { term: "ITR Forms", definition: "ITR forms are forms used by taxpayers to declare their income to the Income Tax Department of India." },
+                    { term: "ITR-V", definition: "What is ITR-V, How to Download" }
+                ],
+
+                "J": [
+                    { term: "Jai Jawan Jai Kisan", definition: "Jai Jawan Jai Kisan is a slogan given to India by the second Prime Minister of India, Lal Bahadur Shastri, in 1965." },
+                    { term: "Joint Account", definition: "A joint account is a bank account shared by two or more individuals." },
+                    { term: "Journal", definition: "A journal is a detailed account that records all the financial transactions of a business, to be used for future reconciling of and transfer to other official accounting records, such as the general ledger." }
+                ],
+
+                "K": [
+                    { term: "Kiosk Banking", definition: "Definition & Advantages of Kiosk Banking | What is Kiosk Banking?" }
+                ],
+
+                "L": [
+                    { term: "Labour Force Participation Rate", definition: "The labour force participation rate is a measure of an economy's active workforce." },
+                    { term: "Laffer Curve", definition: "What is Laffer Curve, and its Impact" },
+                    { term: "Land Value", definition: "Land value is the value of a parcel of land determined by the market." },
+                    { term: "Land", definition: "Definition, Valuation, and Importance of Owning Land" },
+                    { term: "Last Traded Price (LTP)", definition: "What is Last Traded Price, Impact, Importance" },
+                    { term: "Law of Supply", definition: "The law of supply is a fundamental principle of economic theory that states that, all else equal, an increase in price results in an increase in quantity supplied." },
+                    { term: "Law of Supply and Demand", definition: "The law of supply and demand explains the interaction between the supply of and demand for a resource." },
+                    { term: "Layoff", definition: "What it is, Explanation, and Reasons for Layoffs" },
+                    { term: "Leadership", definition: "Definition, Evolution from Management, and the Servant Leadership Approach" },
+                    { term: "Lease", definition: "A lease is a contract outlining the terms under which one party agrees to rent property owned by another party." },
+                    { term: "Ledger Balance", definition: "Ledger balance is the balance of funds in an account as of the beginning of the day." },
+                    { term: "Legal Tender", definition: "Legal tender is any official medium of payment recognized by law that can be used to extinguish a public or private debt, or meet a financial obligation." },
+                    { term: "Letter of Indemnity", definition: "A letter of indemnity is a document used in business transactions to protect against any potential losses that might occur." },
+                    { term: "Leverage", definition: "Definition & Advantages of Leverage | What is Leverage?" },
+                    { term: "Lien", definition: "Definition & Advantages of Lien | What is Lien?" },
+                    { term: "Limit Order", definition: "A limit order is an order to buy or sell a stock at a specific price or better." },
+                    { term: "Liquid Assets", definition: "Liquid assets are cash or securities that can be quickly converted to cash." },
+                    { term: "Liquidation", definition: "Definition & Advantages of Liquidation | What is Liquidation?" },
+                    { term: "Liquidity Adjustment Facility", definition: "Liquidity Adjustment Facility (LAF) is a monetary policy tool which allows banks to borrow money through repurchase agreements." },
+                    { term: "Load", definition: "Definition, How Load Works" },
+                    { term: "Logo", definition: "Definition, Its Importance, and Elements" },
+                    { term: "Lorenz Curve", definition: "The Lorenz curve is a graphical representation of the distribution of income or wealth." },
+                    { term: "Lottery", definition: "What is a lottery? Advantages and disadvantages of lottery" }
+                ],
+
+                "M": [
+                    { term: "Margin", definition: "Margin is the difference between the selling price of a product and the cost of producing it." },
+                    { term: "Marginal Standing Facility", definition: "Marginal Standing Facility (MSF) is a window for banks to borrow from the Reserve Bank of India in an emergency situation when inter-bank liquidity dries up completely." },
+                    { term: "Market", definition: "Definition & Advantages of Market | How market works" },
+                    { term: "Market Share", definition: "Market share represents the percentage of an industry, or a market's total sales, that is earned by a particular company over a specified time period." },
+                    { term: "Marketable Securities", definition: "Marketable securities are liquid financial instruments that can be quickly converted into cash at a reasonable price." },
+                    { term: "Marketing", definition: "Definition and Five Concepts of Marketing" },
+                    { term: "MCX", definition: "Multi Commodity Exchange - Definition & Advantages of MCX Multi Commodity Exchange | What is MCX Multi Commodity Exchange?" },
+                    { term: "Mean", definition: "What is Mean? how to find the mean in mathematics, and the formula" },
+                    { term: "Mercantilism", definition: "Mercantilism is an economic theory that advocates government regulation of international trade to generate wealth and strengthen national power." },
+                    { term: "Merchant Banking", definition: "Definition & Advantages of Merchant Banking | What is Merchant Banking?" },
+                    { term: "Minority Interest", definition: "Minority interest is the portion of a subsidiary corporation's stock that is not owned by the parent corporation." },
+                    { term: "Mixed Economic System", definition: "A mixed economic system is an economic system that features characteristics of both capitalism and socialism." },
+                    { term: "Money Management", definition: "Money management is the process of budgeting, saving, investing, spending, or otherwise overseeing the capital usage of an individual or group." },
+                    { term: "Monopoly", definition: "What It is, Explanation, Types of Monopoly" },
+                    { term: "Moral Suasion", definition: "Moral suasion is the act of persuading a person or group to act in a certain way through appeals to morality and good will." },
+                    { term: "Moratorium", definition: "A moratorium is the temporary suspension of an activity or a law until future events warrant lifting the suspension or related issues have been resolved." },
+                    { term: "Muhurat Trading", definition: "Muhurat trading is the auspicious stock trading practice followed on the occasion of Diwali." },
+                    { term: "Multibagger Stocks", definition: "Multibagger - Definition & Advantages of Multibagger Stocks Multibagger | What is Multibagger Stocks Multibagger?" }
+                ],
+
+                "N": [
+                    { term: "NABARD", definition: "Definition & Advantages of NABARD" },
+                    { term: "Narrow Money", definition: "Narrow money is a category of the money supply that includes all physical money like coins and currency, demand deposits, and other liquid assets held by the central bank." },
+                    { term: "NDNC Registry", definition: "The National Do Not Call (NDNC) Registry is a database containing a list of phone numbers of individuals who have opted out of receiving unsolicited commercial communication." },
+                    { term: "Near Money", definition: "Near money refers to highly liquid assets that can easily be converted into cash, such as savings accounts and treasury bills." },
+                    { term: "Negotiable Instrument Act", definition: "The Negotiable Instruments Act, 1881 is an act in India that defines what constitutes a negotiable instrument and outlines the law governing their use in the country." },
+                    { term: "Net Sales", definition: "Net sales are the total revenue from goods sold or services provided to a customer during a certain period, less the sales returns, allowances, and discounts." },
+                    { term: "Net Worth", definition: "Definition & Advantages of Net Worth | What is Net Worth?" },
+                    { term: "Netting", definition: "Netting is the process of offsetting the value of multiple positions or payments due to be exchanged between two or more parties." },
+                    { term: "NITI Aayog", definition: "NITI Aayog is a policy think tank of the Government of India, established with the aim to achieve sustainable development goals and to enhance cooperative federalism." },
+                    { term: "Noncurrent Assets", definition: "Noncurrent assets are a company's long-term investments for which the full value will not be realized within the accounting year." },
+                    { term: "Nostro Account", definition: "A Nostro account is an account that a bank holds in a foreign currency in another bank." },
+                    { term: "Novation", definition: "Novation is the act of replacing one participating member of a contract with a new member." },
+                    { term: "NSDL", definition: "National Securities Depository Limited - Definition & Advantages of NSDL National Securities Depository Limited | What is NSDL National Securities Depository Limited?" },
+                    { term: "Numismatics", definition: "Numismatics is the study or collection of currency, including coins, tokens, paper money, and related objects." }
+                ],
+
+                "O": [
+                    { term: "Occupancy Certificate", definition: "An occupancy certificate is a document that certifies that a building is suitable for occupation." },
+                    { term: "Operating Profit", definition: "Operating profit is the profit earned from a firm's normal core business operations." },
+                    { term: "Operating Revenue", definition: "Operating revenue is the revenue generated from a company's primary business activities." },
+                    { term: "Optimal Capital Structure", definition: "Optimal capital structure is the best debt-to-equity ratio for a firm that maximizes its value and minimizes its cost of capital." },
+                    { term: "Ordinary Shares", definition: "Ordinary shares are securities that represent equity ownership in a company and entitle the owner to a share of the company’s success in the form of dividends." },
+                    { term: "Overhead", definition: "Overhead refers to the ongoing business expenses not directly attributed to creating a product or service." },
+                    { term: "Overlay", definition: "Overlay refers to the application of one strategy on top of an existing investment portfolio to achieve specific objectives." }
+                ],
+
+                "P": [
+                    { term: "Pac Man", definition: "Definition & Advantages of Pac Man | How Pac Man defense strategy works" },
+                    { term: "Paid Up Capital", definition: "Paid up capital is the amount of money a company has received from shareholders in exchange for shares of stock." },
+                    { term: "PAN", definition: "Permanent Account Number (PAN) is a ten-digit alphanumeric number issued by the Indian Income Tax Department." },
+                    { term: "Parent Company", definition: "A parent company is a company that controls another company, known as a subsidiary, by owning a majority of its shares." },
+                    { term: "Participatory Notes", definition: "Participatory notes, also known as P-notes, are financial instruments used by investors to invest in Indian securities without being registered with the SEBI." },
+                    { term: "Passive Income", definition: "Passive income is earnings derived from a rental property, limited partnership, or other enterprise in which a person is not actively involved." },
+                    { term: "Payee", definition: "A payee is a party in an exchange of goods or services who receives payment." },
+                    { term: "Payment Banks", definition: "What are Payment Banks?, Example, Advantages" },
+                    { term: "Payment", definition: "Payment is the transfer of money or goods and services in exchange for a product or service." },
+                    { term: "PayPal", definition: "PayPal is an online payment system that allows individuals and businesses to transfer funds electronically." },
+                    { term: "Payroll", definition: "Payroll refers to the process by which employers pay an employee for the work they have completed." },
+                    { term: "Peer Group", definition: "A peer group is a group of individuals or entities that share similar characteristics." },
+                    { term: "Per Capita Income", definition: "Per capita income is a measure of the amount of money earned per person in a nation or geographic region." },
+                    { term: "Person", definition: "In legal terms, a person is any individual or entity capable of having legal rights and obligations." },
+                    { term: "Personal Finance", definition: "Personal finance is the management of individual or family financial activities, including budgeting, saving, and investing." },
+                    { term: "Petition", definition: "Definition & Advantages of Petition | What is Petition?" },
+                    { term: "Petty Cash", definition: "Petty cash is a small amount of cash on hand that is used for paying small amounts owed, rather than writing a check." },
+                    { term: "Physical Capital", definition: "Definition & Advantages of Physical Capital | What is Physical Capital?" },
+                    { term: "PLI Scheme", definition: "What is PLI Scheme?, Definition & Benefits" },
+                    { term: "Portfolio Construction", definition: "Portfolio construction is the process of selecting the right mix of securities to achieve a specific investment objective." },
+                    { term: "Portfolio Investment", definition: "Portfolio investment refers to the purchase of stocks, bonds, or other financial assets that do not result in direct control of the issuing entity." },
+                    { term: "Portfolio Management", definition: "What is Portfolio Management, Objectives, and Types" },
+                    { term: "Positive Economics", definition: "Positive economics is the branch of economics that concerns the description and explanation of economic phenomena." },
+                    { term: "Predator", definition: "Definition, How it Works, and Considerations of Strategic Acquisitions" },
+                    { term: "Preference Shares", definition: "Preference shares are a class of shares that entitle the shareholder to a fixed dividend, whose payment takes priority over that of ordinary share dividends." },
+                    { term: "Previous Year", definition: "What is Previous Year In Income Tax?" },
+                    { term: "Price Elasticity Of Demand", definition: "Price elasticity of demand measures the responsiveness of the quantity demanded of a good to a change in its price." },
+                    { term: "Prima Facie", definition: "Prima facie is a Latin term meaning 'at first sight' or 'based on first impression.'" },
+                    { term: "Primary Deficit", definition: "Primary deficit is the fiscal deficit of the current year minus interest payments on previous borrowings." },
+                    { term: "Priority Sector Lending", definition: "What is Priority Sector Lending?, Definition & Categories" },
+                    { term: "Private Placement", definition: "What is Private Placement, Time Limit, and Rules" },
+                    { term: "Private Sector", definition: "The private sector is the part of the economy that is run by individuals and companies for profit and is not state controlled." },
+                    { term: "Procurement", definition: "Procurement is the process of finding and acquiring goods and services from an external source, often through a tendering or competitive bidding process." },
+                    { term: "Production Cost", definition: "Production cost is the total amount of money spent on the production of a good or service." },
+                    { term: "Profit Center", definition: "What is Profit Center, How Profit Center Works" },
+                    { term: "Project Finance", definition: "Project finance is the long-term financing of infrastructure and industrial projects based upon the projected cash flows of the project rather than the balance sheets of its sponsors." },
+                    { term: "Promissory Estoppel", definition: "Promissory estoppel is a legal principle that prohibits a party from reneging on a promise made to a second party if the latter has reasonably relied on that promise to his or her detriment." },
+                    { term: "Promissory Note", definition: "A promissory note is a financial instrument that contains a written promise by one party to pay another party a definite sum of money, either on demand or at a specified future date." },
+                    { term: "Property Management", definition: "Property management is the operation, control, and oversight of real estate as used in its most broad terms." },
+                    { term: "Property Rights", definition: "Property rights refer to the legal ownership of resources, including the right to use, transfer, and dispose of those resources." },
+                    { term: "Prospectus", definition: "A prospectus is a formal legal document that provides details about an investment offering for sale to the public." },
+                    { term: "Proxy", definition: "What it is, How it Works, and Proxy Statement" },
+                    { term: "Public Company", definition: "A public company is a company whose shares are traded freely on a stock exchange." },
+                    { term: "Put Call Ratio", definition: "What it is and How it Works" }
+                ],
+
+                "Q": [
+                    { term: "QIP", definition: "Qualified Institutional Placement - Definition & Advantages of QIP Qualified Institutional Placement" },
+                    { term: "Quasi Contract", definition: "What is Quasi Contract?, Definition & Advantages" },
+                    { term: "Quotation", definition: "Definition, How to Write, and Inclusion" }
+                ],
+
+                "R": [
+                    { term: "Ratio Analysis", definition: "Ratio analysis is a quantitative method of gaining insight into a company's liquidity, operational efficiency, and profitability by studying its financial statements." },
+                    { term: "Rationalisation", definition: "What is Rationalisation?, Definition & Elements" },
+                    { term: "Raw Materials", definition: "Definition & Advantages of Raw Materials | What is Raw Materials?" },
+                    { term: "Real Income", definition: "Real income is the income of an individual or group after taking into consideration the effects of inflation on purchasing power." },
+                    { term: "Receivables", definition: "Receivables refer to money owed to a company by its customers from sales made on credit." },
+                    { term: "Receiver", definition: "A receiver is a person appointed by a court or creditor to manage and preserve the property of a debtor or bankrupt until a court ruling is made." },
+                    { term: "Recession", definition: "What is Recession, What Causes It, and Indicators" },
+                    { term: "Red", definition: "Definition and Explanation of Red in Finance" },
+                    { term: "Register", definition: "A register is a record or list of information, typically used for keeping track of transactions or data in a structured way." },
+                    { term: "Reimbursement", definition: "Reimbursement is the act of compensating someone for an expense." },
+                    { term: "Reinsurance", definition: "Reinsurance is insurance that an insurance company purchases from another insurance company to insulate itself from the risk of a major claims event." },
+                    { term: "Remittance", definition: "Remittance refers to the transfer of money by a foreign worker to an individual in their home country." },
+                    { term: "Replacement Cost", definition: "Replacement cost is the cost to replace an asset of a company at the same or equal value, where the asset to be replaced could be a real estate property, investment securities, accounts receivable, etc." },
+                    { term: "Repo", definition: "Repurchase Agreement (Repo) is a form of short-term borrowing for dealers in government securities." },
+                    { term: "Reserve Fund", definition: "A reserve fund is a savings account or other highly liquid asset set aside by an individual or business to meet any future costs or financial obligations, especially those arising unexpectedly." },
+                    { term: "Retail Banking", definition: "Retail banking is the provision of services by a bank to individual consumers, rather than to companies, corporations, or other banks." },
+                    { term: "Retained Earnings", definition: "Retained Earnings - What is Retained Earnings?, Definition & Advantages" },
+                    { term: "Retirement Benefits", definition: "Retirement benefits are the financial support and services provided to individuals who have retired from active work." },
+                    { term: "Revaluation", definition: "Revaluation is the process of adjusting the value of an asset to reflect its current market value rather than its original purchase price or historical cost." },
+                    { term: "Revenue", definition: "Revenue - Definition & Advantages of Revenue management" },
+                    { term: "Revenue Deficit", definition: "What is Revenue Deficit, Formula, Implications" },
+                    { term: "Reverse Auction", definition: "A reverse auction is a type of auction in which the roles of buyer and seller are reversed." },
+                    { term: "Risk", definition: "What is Risk, Basics of Risk, and Types" },
+                    { term: "Royalty", definition: "Royalty is a payment made by one party to another for the right to use a particular asset, typically intellectual property, over a period of time." },
+                    { term: "Run", definition: "What it is, Explanation, and Factors to Consider" }
+                ],
+
+                "S": [
+                    { term: "S&P 500 Index", definition: "S&P 500 Index: Definition, what does it measure, and What Affects the S&P 500?" },
+                    { term: "Sale", definition: "Sale: What it is, How it Works, and Types of Sale" },
+                    { term: "Sample", definition: "Sample: Definition, Importance, and Types of Sampling with Example" },
+                    { term: "Sampling", definition: "Sampling: Definition, Sampling Error, and Different Methods of Sampling" },
+                    { term: "Scalar Chain", definition: "Scalar chain is a concept that refers to the clear and unbroken line of authority extending from the top to the bottom of the organization." },
+                    { term: "Scalper", definition: "A scalper is an investor who buys and sells financial instruments within the same trading day." },
+                    { term: "Scarcity", definition: "Scarcity - Definition & Advantages of Scarcity | What is Scarcity?" },
+                    { term: "Scheduled Bank", definition: "Scheduled banks are banks that are listed in the Second Schedule of the Reserve Bank of India Act, 1934." },
+                    { term: "Scrip", definition: "Scrip refers to a certificate representing a fractional share of stock, usually as a result of a split." },
+                    { term: "Security", definition: "Security: What is Security, Explanation, and Types of Security" },
+                    { term: "Self Assessment Tax", definition: "Self Assessment Tax: What is Self Assessment Tax, Who Should Pay" },
+                    { term: "Sensitivity Analysis", definition: "Sensitivity analysis is a technique used to determine how different values of an independent variable impact a particular dependent variable under a given set of assumptions." },
+                    { term: "Service Charge", definition: "A service charge is an additional fee charged for services related to the primary product or service being purchased." },
+                    { term: "SGX Nifty", definition: "SGX Nifty - What is SGX Nifty?, Definition & Benefits of SGX Nifty" },
+                    { term: "Share Capital", definition: "Share capital is the money a company raises by issuing common or preferred stock." },
+                    { term: "Share Certificate", definition: "A share certificate is a document issued by a company that serves as legal proof of ownership of the number of shares indicated." },
+                    { term: "Shareholder", definition: "A shareholder is an individual or institution that legally owns a share of stock in a public or private corporation." },
+                    { term: "Sinking Fund", definition: "A sinking fund is a fund containing money set aside or saved to pay off a debt or bond." },
+                    { term: "Slander", definition: "Slander is the action or crime of making a false spoken statement damaging to a person's reputation." },
+                    { term: "Social Science", definition: "Social Science: What It is, Explanation, Branches of Social Science" },
+                    { term: "Sole Proprietorship", definition: "A sole proprietorship is a type of enterprise owned and run by one person, with no distinction between the owner and the business." },
+                    { term: "Solvency", definition: "Solvency is the ability of a company to meet its long-term financial obligations." },
+                    { term: "Solvency Ratio", definition: "Solvency ratio is a key metric used to measure an enterprise's ability to meet its debt and other obligations." },
+                    { term: "Specialization", definition: "Specialization is a method of production where a business or area focuses on the production of a limited scope of products or services in order to gain greater degrees of productive efficiency." },
+                    { term: "Specimens of different ITR forms", definition: "Specimens of different ITR forms are sample forms issued by the tax authorities to help taxpayers understand how to fill out their tax returns." },
+                    { term: "Speculation", definition: "Speculation: Definition & Advantages of Speculation | What is Speculation?" },
+                    { term: "Spot Market", definition: "The spot market is where financial instruments, such as commodities, currencies, and securities, are traded for immediate delivery." },
+                    { term: "Square Off", definition: "Square Off - Definition & Advantages of Square Off | What is Square Off?" },
+                    { term: "Stamp Duty", definition: "Stamp duty is a tax that is levied on single property purchases or documents." },
+                    { term: "Standard Deviation", definition: "Standard Deviation: What It is, Its Importance, and Formula" },
+                    { term: "Statistics", definition: "Statistics: Definition, Scope, and Types of Statistics" },
+                    { term: "Statutory Audit", definition: "A statutory audit is a legally required review of the accuracy of a company's or government's financial records." },
+                    { term: "Stock Trading", definition: "Stock trading involves buying and selling shares of companies in an attempt to profit from daily price movements." },
+                    { term: "Stocks", definition: "Stocks: Definition, Types of Stocks, and Factors to Consider for Investing" },
+                    { term: "Strategic Alliance", definition: "A strategic alliance is an arrangement between two companies to undertake a mutually beneficial project while each retains its independence." },
+                    { term: "Subpoena", definition: "A subpoena is a written order issued by a court that requires a person to attend court and give evidence or produce documents." },
+                    { term: "Subscribed", definition: "What it is, How it Works, and Its Outcomes" },
+                    { term: "Subsidy", definition: "A subsidy is a benefit given by the government to individuals or groups, usually in the form of a cash payment or a tax reduction." },
+                    { term: "Subvention", definition: "Subvention Meaning" },
+                    { term: "Sunrise Industry", definition: "A sunrise industry is a sector of the economy that is expected to grow rapidly in the future." },
+                    { term: "Surcharge", definition: "A surcharge is an additional fee or charge added to the cost of a good or service." },
+                    { term: "Surety", definition: "A surety is a person or company that takes responsibility for another's performance of an undertaking, for example, their appearing in court or the payment of a debt." },
+                    { term: "Suspense Account", definition: "A suspense account is an account used temporarily to carry doubtful entries and discrepancies pending their analysis and permanent classification." },
+                    { term: "Sustainability", definition: "Sustainability: What It is, Explanation, Benefits of Sustainability in Business" },
+                    { term: "Swap", definition: "Swap: What is Swap, Types, Uses, Example" },
+                    { term: "Sweep Account", definition: "A sweep account is a bank or brokerage account that automatically transfers amounts that exceed (or fall short of) a certain level into a higher interest-earning investment option at the close of each business day." },
+                    { term: "Swing Trading", definition: "Swing trading is a style of trading that attempts to capture short- to medium-term gains in a stock (or any financial instrument) over a period of a few days to several weeks." },
+                    { term: "Switching", definition: "Switching: Definition, How it Works, and Drawbacks" },
+                    { term: "SWOT Analysis", definition: "SWOT analysis is a strategic planning technique used to identify strengths, weaknesses, opportunities, and threats related to business competition or project planning." },
+                    { term: "Systematic Risk", definition: "Systematic risk refers to the risk inherent to the entire market or market segment." }
+                ],
+
+                "T": [
+                    { term: "TAN", definition: "TAN: What is TAN, Structure, Who can Apply" },
+                    { term: "Tax Advisor", definition: "A tax advisor is a financial expert with advanced training and knowledge of tax accounting and tax law." },
+                    { term: "Tax Deducted at Source (TDS)", definition: "TDS: What is TDS, How it Works, Advantages" },
+                    { term: "Tax Planning", definition: "Tax Planning - What is Tax Planning?, Importance & Benefits" },
+                    { term: "Taxation", definition: "Taxation - Definition & Advantages of Taxation" },
+                    { term: "Tender", definition: "Tender - Definition & Advantages of Tender | What is a Tender?" },
+                    { term: "Tenement", definition: "Tenement: What is Tenement, and The History of Tenements in India" },
+                    { term: "Term Loan", definition: "A term loan is a monetary loan that is repaid in regular payments over a set period of time." },
+                    { term: "Ticker", definition: "A ticker is a symbol or series of characters that represents a specific stock, bond, or other security." },
+                    { term: "Ticker Symbol", definition: "A ticker symbol is a unique series of letters assigned to a security or stock for trading purposes." },
+                    { term: "Ticker Tape", definition: "Ticker Tape - Definition & Advantages of Ticker Tape | What is Ticker Tape?" },
+                    { term: "Time Value of Money", definition: "The time value of money is a financial concept that holds that money available at the present time is worth more than the identical sum in the future due to its potential earning capacity." },
+                    { term: "Top Gainers", definition: "Top gainers are stocks that have gained the most in terms of percentage value over a specific period." },
+                    { term: "Total Utility", definition: "Total utility is the total satisfaction received from consuming a given total quantity of a good or service." },
+                    { term: "Trade Credit", definition: "Trade Credit: What is Trade Credit, Its Benefits, and Potential Risks" },
+                    { term: "Trade Deficit", definition: "A trade deficit occurs when a country imports more goods than it exports." },
+                    { term: "Trading", definition: "Trading is the process of buying and selling financial instruments, such as stocks, bonds, commodities, or currencies, in financial markets." },
+                    { term: "Trading Platform", definition: "A trading platform is a software system used to trade financial instruments." },
+                    { term: "Transaction", definition: "Transaction: Definition, Explanation, and Types of Transactions" },
+                    { term: "Transfer Pricing", definition: "Transfer pricing refers to the rules and methods for pricing transactions within and between enterprises under common ownership or control." },
+                    { term: "Transferor", definition: "A transferor is an individual or entity who makes a transfer of property, rights, or interests to another person or entity." },
+                    {
+                        term: "Trial Balance", definition: "A trial balance is a bookkeeping worksheet in which the balances of all ledgers are compiled into debit and credit account column totals that are equal."
+                    }
+                ],
+
+                "U": [
+                    { term: "Underemployment", definition: "Underemployment is a situation in which a person is working, but not in the capacity that fully utilizes their skills or abilities." },
+                    { term: "Underwater", definition: "Underwater: Definition and Explanation of Underwater" },
+                    { term: "Underwriting", definition: "Underwriting - Definition & Advantages of Underwriting | What is Underwriting?" },
+                    { term: "Unicorn", definition: "Unicorn: Definition, How it works, and why it matters" },
+                    { term: "Unit Cost", definition: "Unit Cost: What is Unit Cost, Formula, and Example" },
+                    { term: "Unsystematic Risk", definition: "Unsystematic risk is the risk specific to a company, industry, market, or asset class that can be reduced through diversification." }
+                ],
+
+                "V": [
+                    { term: "Value", definition: "Value - Definition & explanation of Value | What is Value?" },
+                    { term: "Variable Cost", definition: "Variable cost is a corporate expense that changes in proportion to production output." },
+                    { term: "Vested Interest", definition: "Vested interest is a financial or personal stake in a company, policy, or other situation, that might affect the objectivity of a person’s actions or decisions." },
+                    { term: "Visa Card", definition: "Visa Card is a type of payment card branded by Visa Inc., a global payment technology company." },
+                    { term: "Vostro Account", definition: "A Vostro account is an account that a correspondent bank holds on behalf of another bank." },
+                    { term: "Voucher", definition: "Voucher - Definition, Advantages & Disadvantages of Voucher" }
+                ],
+
+                "W": [
+                    { term: "Wealth Management", definition: "Wealth management is an investment advisory service that combines other financial services to address the needs of affluent clients." },
+                    { term: "Weighted Average", definition: "A weighted average is an average that takes into account the relative importance, or weight, of each value in a data set." },
+                    { term: "Weighted", definition: "Weighted: What It is, Explanation" },
+                    { term: "Welfare", definition: "Welfare refers to government programs that provide financial aid to individuals or groups who cannot support themselves." },
+                    { term: "Welfare Economics", definition: "Welfare economics is a branch of economics that uses microeconomic techniques to evaluate well-being at the aggregate (economy-wide) level." },
+                    { term: "What is a deposit slip?", definition: "A deposit slip is a form supplied by a bank for a depositor to fill out, designed to document in categories the items included in the deposit transaction." },
+                    { term: "What is a Stock Screener?", definition: "A stock screener is a tool that investors and traders can use to filter stocks based on specific criteria." },
+                    { term: "What Is Amortization", definition: "What Is Amortization - Definition & Advantages of Amortization | What is Amortization?" },
+                    { term: "What is Bailment?", definition: "Bailment refers to a legal relationship in common law where the owner of a physical object transfers possession of the object to another person while retaining ownership." },
+                    { term: "What is Credit Score?", definition: "What is Credit Score? How it Works" },
+                    { term: "What is IPO?", definition: "An IPO, or Initial Public Offering, is the process by which a private company becomes a publicly traded company by offering its shares to the public for the first time." },
+                    { term: "What is Macro Environment?", definition: "Macro environment refers to the overall economic conditions, social trends, demographics, and cultural factors that can affect a business." },
+                    { term: "What Is the Law of Diminishing Marginal Utility?", definition: "The Law of Diminishing Marginal Utility states that as a person increases consumption of a product, there is a decline in the marginal utility that person derives from consuming each additional unit of that product." },
+                    { term: "What is Tort Law?", definition: "Tort law is the area of law that deals with civil wrongs, providing relief to individuals harmed by the wrongful acts of others." },
+                    { term: "White Collar", definition: "White collar refers to a class of employees known for earning high average salaries doing highly skilled work, but not by performing manual labor at their jobs." },
+                    { term: "White Paper", definition: "White Paper: Definition, Types, and How to Write White Paper" },
+                    { term: "White Revolution", definition: "The White Revolution was a plan to boost the production of milk in India, leading to an increase in dairy production and the income of farmers." },
+                    { term: "Wholesale Banking", definition: "Wholesale banking refers to the provision of services by banks to large corporate clients, other financial institutions, and government agencies." },
+                    { term: "Wholesale Trade", definition: "Wholesale trade is the sale of goods or merchandise to retailers, to industrial, commercial, institutional, or other professional business users, or to other wholesalers and related subordinated services." },
+                    { term: "Working Capital", definition: "Working capital is the capital of a business that is used in its day-to-day trading operations, calculated as the current assets minus the current liabilities." }
+                ],
+
+                "Y": [
+                    { term: "Year to Date", definition: "Year to Date (YTD) refers to the period of time beginning the first day of the current calendar year or fiscal year up to the current date." },
+                    { term: "Yo Yo", definition: "Yo Yo: Definition, How it Works, and Example" }
+                ],
+
+                "Z": [
+                    { term: "Zero Coupon Bond", definition: "A zero-coupon bond is a bond that is issued at a discount to its face value and does not pay interest, but is redeemed at its face value at maturity." },
+                    { term: "Zombies", definition: "Zombies: What it is, External Risk to Zombies Company, and its Effect on the Economy" }
+                ]
+            };
+
+            const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
+            const alphabetNav = document.querySelector('.alphabet-nav');
+            const dictionaryContent = document.getElementById('dictionaryContent');
+
+            // Generate A-Z Buttons
+            alphabet.forEach(letter => {
+                let button = document.createElement('button');
+                button.classList.add('btn', 'btn-primary');
+                button.textContent = letter;
+                button.addEventListener('click', function() {
+                    const section = document.getElementById(letter);
+                    if (section) {
+                        section.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+                alphabetNav.appendChild(button);
+            });
+
+            // Generate dictionary content sections
+            for (let letter in terms) {
+                let section = document.createElement('div');
+                section.classList.add('letter-section');
+                section.id = letter;
+                section.innerHTML = `<h2>${letter}</h2>`;            
+                let ul = document.createElement('ul');
+                ul.classList.add('term-list', 'list-unstyled');
+                
+                terms[letter].forEach(termObj => {
+                    let li = document.createElement('li');
+                    li.textContent = termObj.term;
+                    li.addEventListener('click', function() {
+                        document.getElementById('modalBody').textContent = termObj.definition;
+                        let modal = new bootstrap.Modal(document.getElementById('definitionModal'));
+                        modal.show();
+                    });
+                    ul.appendChild(li);
+                });
+
+                section.appendChild(ul);
+                dictionaryContent.appendChild(section);
+            }
+        });
+    </script>
+</body>
+</html>

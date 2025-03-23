@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tax Analyzer</title>
+<style>
+/* Global Styling */
+body {
+	font-family: 'Arial', sans-serif;
+	background-color: #f4f7f6;
+	margin: 0;
+	padding: 20px;
+	display: flex;
+	justify-content: center;
+}
+
+.container {
+	width: 90%;
+	max-width: 1000px;
+	margin: 50px auto;
+	background-color: #fff;
+	padding: 30px;
+	box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+	border-radius: 12px;
+}
+
+/* Header */
+.header {
+	background: linear-gradient(135deg, #007bff, #0056b3);
+	color: white;
+	padding: 30px;
+	text-align: center;
+	border-radius: 12px 12px 0 0;
+}
+
+.header h1 {
+	margin: 0;
+	font-size: 2.5em;
+	letter-spacing: 1px;
+}
+
+.description {
+	margin: 25px 0;
+	padding: 20px;
+	background: #e9f7fe;
+	border-left: 5px solid #007bff;
+	border-radius: 8px;
+	font-size: 1.1em;
+	color: #333;
+	line-height: 1.7em;
+}
+
+/* Input Form */
+.form-group {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 25px;
+}
+
+.form-group label {
+	flex-basis: 40%;
+	font-weight: bold;
+	color: #495057;
+	margin-right: 10px;
+	font-size: 1.2em; /* Increase label size */
+}
+
+.form-group input[type="number"], .form-group input[type="checkbox"] {
+	flex-basis: 60%;
+	padding: 15px; /* Increase input padding */
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	background-color: #f8f9fa;
+	box-shadow: inset 0px 4px 8px rgba(0, 0, 0, 0.05);
+	transition: all 0.3s ease;
+	font-size: 1.1em; /* Increase input text size */
+	font-weight: bold; /* Make input text bold */
+}
+
+.form-group input[type="number"]:hover, .form-group input[type="checkbox"]:hover
+	{
+	border-color: #007bff;
+}
+
+.tooltip {
+	display: inline-block;
+	position: relative;
+	cursor: pointer;
+	background-color: #007bff;
+	color: white;
+	width: 22px;
+	height: 22px;
+	border-radius: 50%;
+	text-align: center;
+	font-weight: bold;
+	line-height: 22px;
+	font-size: 14px;
+	margin-left: 5px;
+}
+
+.tooltip .tooltip-text {
+	visibility: hidden;
+	width: 220px;
+	background-color: #555;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 8px;
+	position: absolute;
+	z-index: 1;
+	bottom: 135%;
+	left: 50%;
+	margin-left: -110px;
+	opacity: 0;
+	transition: opacity 0.4s ease;
+}
+
+.tooltip:hover .tooltip-text {
+	visibility: visible;
+	opacity: 1;
+}
+
+.boxed-section {
+	border: 3px solid #007BFF;
+	padding: 20px;
+	margin-bottom: 30px;
+	border-radius: 12px;
+	background-color: #f0f8ff;
+}
+
+/* Submit Button */
+button {
+	background: linear-gradient(135deg, #007bff, #0056b3);
+	width: 50%;
+	color: white;
+	padding: 12px;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	font-size: 18px;
+	transition: all 0.4s ease;
+}
+
+button:hover {
+	background: linear-gradient(135deg, #0056b3, #003d80);
+}
+
+.button-container {
+	text-align: center;
+	margin-top: 30px;
+}
+</style>
+</head>
+
+<body>
+	<div class="container">
+		<!-- Header -->
+		<header class="header">
+			<h1>Tax Regime Form</h1>
+			<p>Fill out the form below to determine your savings for
+				Tax Regime, i.e., Old Tax Regime or New Tax Regime.</p>
+		</header>
+
+		<!-- Description -->
+		<div class="description">
+			<p>When it comes to filing income tax returns (ITR), taxpayers frequently encounter a common dilemma: should they opt for the old tax regime or the new one? This decision is crucial for both first-time filers and seasoned individuals.</p>
+		</div>
+		<form action="#" th:action="@{/calculate-tax-regime}"
+			th:object="${userTaxInfo}" method="post">
+			<!-- Income Section (Boxed) -->
+			<div class="boxed-section">
+				<h3>Income Details</h3>
+				<div class="form-group">
+					<label for="grossSalary">Gross Salary (₹): <span
+						class="tooltip">i <span class="tooltip-text">Your
+								total income from salary before deductions.</span>
+					</span>
+					</label> <input type="number" id="grossSalary" th:field="*{grossSalary}"
+						required>
+				</div>
+				<!--  
+                    <div class="form-group">
+                        <label for="otherSourcesIncome">Other Sources Income (₹):
+                            <span class="tooltip">i
+                                <span class="tooltip-text">Income from sources like interest, dividends, etc.</span>
+                            </span>
+                        </label>
+                        <input type="number" id="otherSourcesIncome" th:field="*{otherSourcesIncome}">
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="businessIncome">Business Income (₹):
+                            <span class="tooltip">i
+                                <span class="tooltip-text">Income from business or professional services.</span>
+                            </span>
+                        </label>
+                        <input type="number" id="businessIncome" th:field="*{businessIncome}">
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="capitalGains">Capital Gains (₹):
+                            <span class="tooltip">i
+                                <span class="tooltip-text">Profits from selling capital assets (stocks, property, etc.).</span>
+                            </span>
+                        </label>
+                        <input type="number" id="capitalGains" th:field="*{capitalGains}">
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="foreignIncome">Foreign Income (₹):
+                            <span class="tooltip">i
+                                <span class="tooltip-text">Income from any foreign sources.</span>
+                            </span>
+                        </label>
+                        <input type="number" id="foreignIncome" th:field="*{foreignIncome}">
+                    </div>
+        -->
+				<div class="form-group">
+					<label for="agriculturalIncome">Agricultural Income (₹): <span
+						class="tooltip">i <span class="tooltip-text">Income
+								earned from agriculture-related activities.</span>
+					</span>
+					</label> <input type="number" id="agriculturalIncome"
+						th:field="*{agriculturalIncome}" required>
+				</div>
+			</div>
+
+			<!-- Deductions and Exemptions Section (Boxed) -->
+			<div class="boxed-section">
+				<h3>Deductions and Exemptions</h3>
+				<div class="form-group">
+					<label for="standardDeduction">Standard Deduction (₹): <span
+						class="tooltip">i <span class="tooltip-text">The
+								standard deduction allowed (₹50,000).</span>
+					</span>
+					</label> <input type="number" id="standardDeduction"
+						th:field="*{standardDeduction}" value="50000" readonly>
+				</div>
+
+				<div class="form-group">
+					<label for="hra">House Rent Allowance (HRA) (₹): <span
+						class="tooltip">i <span class="tooltip-text">The HRA
+								component of your salary.</span>
+					</span>
+					</label> <input type="number" id="hra" th:field="*{hra}" required>
+				</div>
+
+				<div class="form-group">
+					<label for="lta">Leave Travel Allowance (LTA) (₹): <span
+						class="tooltip">i <span class="tooltip-text">Expenses
+								reimbursed for travel as part of your job.</span>
+					</span>
+					</label> <input type="number" id="lta" th:field="*{lta}" required>
+				</div>
+
+				<div class="form-group">
+					<label for="specialAllowances">Special Allowances (₹): <span
+						class="tooltip">i <span class="tooltip-text">Allowances
+								for specific purposes like overtime, uniform, etc.</span>
+					</span>
+					</label> <input type="number" id="specialAllowances"
+						th:field="*{specialAllowances}" required>
+				</div>
+
+				<div class="form-group">
+					<label for="section80CInvestment">Investments under Section
+						80C (₹): <span class="tooltip">i <span class="tooltip-text">Eligible
+								investments under Section 80C (up to ₹1.5 lakh).</span>
+					</span>
+					</label> <input type="number" id="section80CInvestment"
+						th:field="*{section80CInvestment}" max="150000" required>
+				</div>
+
+				<div class="form-group">
+					<label for="section80DHealth">Health Insurance Premium
+						under Section 80D (₹): <span class="tooltip">i <span
+							class="tooltip-text">Health insurance premiums paid under
+								Section 80D.</span>
+					</span>
+					</label> <input type="number" id="section80DHealth"
+						th:field="*{section80DHealth}" required>
+				</div>
+
+				<div class="form-group">
+					<label for="section80EEducationLoan">Interest on Education Loan under Section 80E (₹):<span class="tooltip">i <span
+							class="tooltip-text">Education Loan premiums paid under
+								Section 80E.</span>
+					</span>
+					</label> <input type="number" id="section80EEducationLoan"
+						th:field="*{section80EEducationLoan}" required>
+				</div>
+				
+				<div class="form-group">
+					<label for="section80GDonations">Donations under Section 80G (₹):<span class="tooltip">i <span
+							class="tooltip-text">Donations premiums paid under
+								Section 80G.</span>
+					</span>
+					</label> <input type="number" id="section80GDonations"
+						th:field="*{section80GDonations}" required>
+				</div>
+				
+				<div class="form-group">
+					<label for="section80TTASavings">Interest on Savings Account under Section 80TTA (₹):<span class="tooltip">i <span
+							class="tooltip-text">Savings Account Interest paid under
+								Section 80TTA.</span>
+					</span>
+					</label> <input type="number" id="section80TTASavings"
+						th:field="*{section80TTASavings}" required>
+				</div>
+				
+				<div class="form-group">
+					<label for="homeLoanInterest">Interest on Home Loan (₹): <span
+						class="tooltip">i <span class="tooltip-text">Interest
+								paid on home loans under Section 24(b).</span>
+					</span>
+					</label> <input type="number" id="homeLoanInterest"
+						th:field="*{homeLoanInterest}" required>
+				</div>
+				
+				<div class="form-group">
+					<label for="otherExemptions">Other Exemptions (₹):<span
+						class="tooltip">i <span class="tooltip-text">Other Exemptions.</span>
+					</span>
+					</label> <input type="number" id="otherExemptions"
+						th:field="*{otherExemptions}" required>
+				</div>
+			</div>
+
+			<!-- Submit Button -->
+			<div class="button-container">
+				<button type="submit">Submit</button>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

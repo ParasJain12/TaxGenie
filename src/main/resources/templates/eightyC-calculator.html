@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>80C Tax Calculator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #355efc 0%, #ACB6E5 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 450px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+            font-size: 1rem;
+            display: block;
+        }
+
+        input[type="text"],
+        select {
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        select:focus {
+            border-color: #74ebd5;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #ddd;
+            border-radius: 5px;
+            outline: none;
+            opacity: 0.85;
+            margin-bottom: 5px;
+            transition: opacity 0.2s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #355efc;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #355efc;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        button {
+            padding: 12px 0;
+            background-color: #355efc;
+            border: none;
+            border-radius: 25px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            text-align: center;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #2a5298;
+            transform: translateY(-2px);
+        }
+
+        .result-section {
+            margin-top: 20px;
+        }
+
+        .result-box {
+            padding: 20px;
+            background-color: #f8faff;
+            border-radius: 12px;
+            border: 2px solid #355efc;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        .result-box p {
+            font-size: 1.2rem;
+            color: #444;
+            margin: 0;
+        }
+
+        .result-box p span {
+            color: #355efc;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1rem;
+            color: #355efc;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        function updateSalaryIncome(val) {
+            document.getElementById('salaryIncome').value = val;
+        }
+
+        function updateSalarySlider(val) {
+            document.getElementById('salaryIncomeSlider').value = val;
+        }
+
+        function updateOtherIncome(val) {
+            document.getElementById('otherIncome').value = val;
+        }
+
+        function updateOtherIncomeSlider(val) {
+            document.getElementById('otherIncomeSlider').value = val;
+        }
+
+        function updateInvestment(val) {
+            document.getElementById('investment').value = val;
+        }
+
+        function updateInvestmentSlider(val) {
+            document.getElementById('investmentSlider').value = val;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>80C Calculator</h1>
+        <form th:action="@{/eightyC-calculator}" th:object="${eightyCCalculator}" method="post">
+            <label for="salaryIncome">Salary Income</label>
+            <input type="text" id="salaryIncome" th:field="*{salaryIncome}" oninput="updateSalarySlider(this.value)" />
+            <input type="range" id="salaryIncomeSlider" name="salaryIncomeSlider" min="0" max="5000000" step="10000" value="250000" oninput="updateSalaryIncome(this.value)" aria-label="Slide to select your salary income">
+            <div class="range-labels">
+                <span>₹ 0</span>
+                <span>₹ 5M</span>
+            </div>
+
+            <label for="otherIncome">Other Income</label>
+            <input type="text" id="otherIncome" th:field="*{otherIncome}" oninput="updateOtherIncomeSlider(this.value)" />
+            <input type="range" id="otherIncomeSlider" name="otherIncomeSlider" min="0" max="1000000" step="5000" value="50000" oninput="updateOtherIncome(this.value)" aria-label="Slide to select your other income">
+            <div class="range-labels">
+                <span>₹ 0</span>
+                <span>₹ 1M</span>
+            </div>
+
+            <label for="investment">Investment</label>
+            <input type="text" id="investment" th:field="*{investment}" oninput="updateInvestmentSlider(this.value)" />
+            <input type="range" id="investmentSlider" name="investmentSlider" min="0" max="150000" step="1000" value="75000" oninput="updateInvestment(this.value)" aria-label="Slide to select your investment">
+            <div class="range-labels">
+                <span>₹ 0</span>
+                <span>₹ 1.5L</span>
+            </div>
+
+            <button type="submit">Calculate</button>
+        </form>
+
+        <div class="result-section">
+            <h1>80C Result</h1>
+            <div class="result-box">
+                <p>Your Taxable Income is: <span th:text="${taxableIncome}"></span></p>
+            </div>
+        </div>
+        <a href="/eightyC-calculator" class="back-link">Back to Calculator</a>
+    </div>
+</body>
+</html>
