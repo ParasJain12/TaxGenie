@@ -17,8 +17,8 @@ import com.taxgenie.services.CustomUserDetailService;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	GoogleOAuth2SuccessHandler googleOAuth2SuccessHandler;
+	//@Autowired
+	//GoogleOAuth2SuccessHandler googleOAuth2SuccessHandler;
 	
 	@Autowired
 	CustomUserDetailService customUserDetailService;
@@ -39,10 +39,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .usernameParameter("email")
             .passwordParameter("password")
         .and()
-        .oauth2Login()
-            .loginPage("/login")
-            .successHandler(googleOAuth2SuccessHandler)
-        .and()
+        //.oauth2Login()
+          //  .loginPage("/login")
+           // .successHandler(googleOAuth2SuccessHandler)
+        //.and()
         .logout()
             .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
             .logoutSuccessUrl("/login")
