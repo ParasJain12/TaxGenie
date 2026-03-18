@@ -15,33 +15,7 @@ import com.taxgenie.model.NewsArticle;
 
 @Service
 public class NewsService {
-/*
-	private static final String API_KEY = "7b672a1d34024464bfe6dd73411c762e";
-    private static final String NEWS_API_URL = "https://newsapi.org/v2/everything?q=finance&apiKey=" + API_KEY;
 
-    public List<NewsArticle> getFinancialNews() {
-        RestTemplate restTemplate = new RestTemplate();
-        String response = restTemplate.getForObject(NEWS_API_URL, String.class);
-
-        JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
-        JsonArray articles = jsonObject.getAsJsonArray("articles");
-
-        List<NewsArticle> newsList = new ArrayList<>();
-        for (JsonElement article : articles) {
-            JsonObject articleObj = article.getAsJsonObject();
-            NewsArticle newsArticle = new NewsArticle();
-            newsArticle.setTitle(articleObj.get("title").getAsString());
-            newsArticle.setDescription(articleObj.get("description").getAsString());
-            newsArticle.setUrl(articleObj.get("url").getAsString());
-            newsArticle.setSource(articleObj.getAsJsonObject("source").get("name").getAsString());
-            newsArticle.setPublishedAt(LocalDateTime.parse(articleObj.get("publishedAt").getAsString().replace("Z", "")));
-
-            newsList.add(newsArticle);
-        }
-
-        return newsList;
-    }
-    */
 	private static final String API_KEY = "7b672a1d34024464bfe6dd73411c762e";
     private static final String NEWS_API_URL = "https://newsapi.org/v2/everything?q=finance&apiKey=" + API_KEY;
 

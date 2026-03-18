@@ -1,6 +1,7 @@
 package com.taxgenie.model;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -16,11 +17,10 @@ public class CustomUserDetail extends User implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<GrantedAuthority> authorityList = new ArrayList<>();
-		super.getRoles().forEach(role -> {
-			authorityList.add(new SimpleGrantedAuthority(role.getName()));
-		});
-		return authorityList;
+		// Single default role
+		return Collections.singletonList(
+				new SimpleGrantedAuthority("USER")
+		);
 	}
 
 	@Override

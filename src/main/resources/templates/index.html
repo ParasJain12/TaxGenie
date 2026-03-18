@@ -41,6 +41,12 @@
 <!-- Template Stylesheet -->
 <link th:href="@{/css/style.css}" href="../static/css/style.css"
 	rel="stylesheet">
+
+	<script th:src="@{/js/config.js}" src="../static/js/config.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+	<script>
+		emailjs.init(EMAILJS_PUBLIC_KEY);
+	</script>
 </head>
 
 <body>
@@ -124,10 +130,19 @@
 						<a href="#" class="nav-link dropdown-toggle"
 						   data-bs-toggle="dropdown">Join Us</a>
 						<div class="dropdown-menu border-light m-0">
+
+							<!-- Show Sign-In and Sign-Up only when NOT logged in -->
 							<a sec:authorize="isAnonymous()" th:href="@{/login}"
-							   href="login.html" class="dropdown-item">Sign-In</a> <a
-								th:href="@{/register}" href="register.html"
-								class="dropdown-item">Sign-Up</a>
+							   href="login.html" class="dropdown-item">Sign-In</a>
+							<a sec:authorize="isAnonymous()" th:href="@{/register}"
+							   href="register.html" class="dropdown-item">Sign-Up</a>
+
+							<!-- Show Logout only when logged in (no CSRF token needed) -->
+							<a sec:authorize="isAuthenticated()" th:href="@{/logout}"
+							   class="dropdown-item text-danger">
+								<i class="fa fa-sign-out-alt me-2"></i>Logout
+							</a>
+
 						</div>
 					</div>
 				</div>
@@ -387,55 +402,63 @@
 	<!-- Service End -->
 
 	<!-- Callback Start -->
-	 <div class="container-fluid callback my-5 pt-5">
-        <div class="container pt-5">
-            <div class="row justify-content-center">
-                <div class="col-lg-7">
-                    <div class="bg-white border rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                            <p class="d-inline-block border rounded text-primary fw-semi-bold py-1 px-3">Get In Touch</p>
-                            <h1 class="display-5 mb-5">Request A Call-Back</h1>
-                        </div>
-                        <div class="row g-3">
-                            <div class="col-sm-6">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="name" placeholder="Your Name">
-                                    <label for="name">Your Name</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-floating">
-                                    <input type="email" class="form-control" id="mail" placeholder="Your Email">
-                                    <label for="mail">Your Email</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="mobile" placeholder="Your Mobile">
-                                    <label for="mobile">Your Mobile</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="subject" placeholder="Subject">
-                                    <label for="subject">Subject</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 100px"></textarea>
-                                    <label for="message">Message</label>
-                                </div>
-                            </div>
-                            <div class="col-12 text-center">
-                                <button class="btn btn-primary w-100 py-3" type="submit">Submit Now</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="container-fluid callback my-5 pt-5">
+		<div class="container pt-5">
+			<div class="row justify-content-center">
+				<div class="col-lg-7">
+					<div class="bg-white border rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.5s">
+						<div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+							<p class="d-inline-block border rounded text-primary fw-semi-bold py-1 px-3">Get In Touch</p>
+							<h1 class="display-5 mb-5">Request A Call-Back</h1>
+						</div>
+						<div class="row g-3">
+							<div class="col-sm-6">
+								<div class="form-floating">
+									<input type="text" class="form-control" id="cb-name" placeholder="Your Name">
+									<label for="cb-name">Your Name</label>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-floating">
+									<input type="email" class="form-control" id="cb-mail" placeholder="Your Email">
+									<label for="cb-mail">Your Email</label>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-floating">
+									<input type="text" class="form-control" id="cb-mobile" placeholder="Your Mobile">
+									<label for="cb-mobile">Your Mobile</label>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-floating">
+									<input type="text" class="form-control" id="cb-subject" placeholder="Subject">
+									<label for="cb-subject">Subject</label>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="form-floating">
+									<textarea class="form-control" placeholder="Leave a message here" id="cb-message" style="height: 100px"></textarea>
+									<label for="cb-message">Message</label>
+								</div>
+							</div>
+
+							<!-- Status message -->
+							<div class="col-12" id="cb-status" style="display:none;">
+								<div id="cb-alert" class="alert mb-0"></div>
+							</div>
+
+							<div class="col-12 text-center">
+								<button class="btn btn-primary w-100 py-3" type="button" onclick="submitCallback()" id="cb-btn">
+									Submit Now
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- Callback End -->
 
 	<!-- Footer Start -->
@@ -554,6 +577,87 @@
 				window.open('https://medium.com/@TheQuietLedger', '_blank');
 			}, 1000);
 		}
+
+		function submitCallback() {
+			const name    = document.getElementById('cb-name').value.trim();
+			const email   = document.getElementById('cb-mail').value.trim();
+			const mobile  = document.getElementById('cb-mobile').value.trim();
+			const subject = document.getElementById('cb-subject').value.trim();
+			const message = document.getElementById('cb-message').value.trim();
+
+			const statusDiv = document.getElementById('cb-status');
+			const alertDiv  = document.getElementById('cb-alert');
+			const btn       = document.getElementById('cb-btn');
+
+			// Basic validation
+			if (!name || !email || !mobile || !subject || !message) {
+				alertDiv.className = 'alert alert-warning mb-0';
+				alertDiv.textContent = 'Please fill in all fields.';
+				statusDiv.style.display = 'block';
+				return;
+			}
+
+			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			if (!emailRegex.test(email)) {
+				alertDiv.className = 'alert alert-warning mb-0';
+				alertDiv.textContent = 'Please enter a valid email address.';
+				statusDiv.style.display = 'block';
+				return;
+			}
+
+			const mobileRegex = /^[6-9]\d{9}$/;
+			if (!mobileRegex.test(mobile)) {
+				alertDiv.className = 'alert alert-warning mb-0';
+				alertDiv.textContent = 'Please enter a valid 10-digit Indian mobile number.';
+				statusDiv.style.display = 'block';
+				return;
+			}
+
+			// Disable button while sending
+			btn.disabled = true;
+			btn.textContent = 'Sending...';
+
+			const templateParams = {
+				from_name:  name,
+				from_email: email,
+				mobile:     mobile,
+				subject:    subject,
+				message:    message
+			};
+
+			emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+					.then(() => {
+						alertDiv.className = 'alert alert-success mb-0';
+						alertDiv.textContent = 'Your request has been submitted! We will call you back soon.';
+						statusDiv.style.display = 'block';
+						btn.textContent = 'Submitted ✓';
+
+						// Clear form
+						document.getElementById('cb-name').value = '';
+						document.getElementById('cb-mail').value = '';
+						document.getElementById('cb-mobile').value = '';
+						document.getElementById('cb-subject').value = '';
+						document.getElementById('cb-message').value = '';
+					})
+					.catch((error) => {
+						alertDiv.className = 'alert alert-danger mb-0';
+						alertDiv.textContent = 'Failed to send. Please try again later.';
+						statusDiv.style.display = 'block';
+						btn.disabled = false;
+						btn.textContent = 'Submit Now';
+						console.error('EmailJS error:', error);
+					});
+		}
+	</script>
+
+	<script>
+		// Back button logout fix
+		window.addEventListener('pageshow', function(event) {
+			// persisted = true means page was loaded from browser cache (back button)
+			if (event.persisted) {
+				window.location.reload();
+			}
+		});
 	</script>
 </body>
 

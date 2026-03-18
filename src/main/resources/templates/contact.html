@@ -41,6 +41,12 @@
 <!-- Template Stylesheet -->
 <link th:href="@{/css/style.css}" href="../static/css/style.css"
 	rel="stylesheet">
+	<!-- Add config.js BEFORE emailjs init -->
+	<script th:src="@{/js/config.js}" src="../static/js/config.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+	<script>
+		emailjs.init(EMAILJS_PUBLIC_KEY);
+	</script>
 </head>
 
 <body>
@@ -151,49 +157,53 @@
 		<div class="container">
 			<div class="row g-5">
 				<div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
-					<h1 class="display-5 mb-4">If You Have Any Query, Please
-						Contact Us</h1>
-					<form>
-						<div class="row g-3">
-							<div class="col-md-6">
-								<div class="form-floating">
-									<input type="text" class="form-control" id="name"
-										placeholder="Your Name"> <label for="name">Your
-										Name</label>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-floating">
-									<input type="email" class="form-control" id="email"
-										placeholder="Your Email"> <label for="email">Your
-										Email</label>
-								</div>
-							</div>
-							<div class="col-12">
-								<div class="form-floating">
-									<input type="text" class="form-control" id="subject"
-										placeholder="Subject"> <label for="subject">Subject</label>
-								</div>
-							</div>
-							<div class="col-12">
-								<div class="form-floating">
-									<textarea class="form-control"
-										placeholder="Leave a message here" id="message"
-										style="height: 100px"></textarea>
-									<label for="message">Message</label>
-								</div>
-							</div>
-							<div class="col-12">
-								<button class="btn btn-primary py-3 px-5" type="submit">Send
-									Message</button>
+					<h1 class="display-5 mb-4">If You Have Any Query, Please Contact Us</h1>
+					<div class="row g-3">
+						<div class="col-md-6">
+							<div class="form-floating">
+								<input type="text" class="form-control" id="ct-name" placeholder="Your Name">
+								<label for="ct-name">Your Name</label>
 							</div>
 						</div>
-					</form>
+						<div class="col-md-6">
+							<div class="form-floating">
+								<input type="email" class="form-control" id="ct-email" placeholder="Your Email">
+								<label for="ct-email">Your Email</label>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="form-floating">
+								<input type="text" class="form-control" id="ct-subject" placeholder="Subject">
+								<label for="ct-subject">Subject</label>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="form-floating">
+                            <textarea class="form-control" placeholder="Leave a message here"
+									  id="ct-message" style="height: 100px"></textarea>
+								<label for="ct-message">Message</label>
+							</div>
+						</div>
+
+						<!-- Status Message -->
+						<div class="col-12" id="ct-status" style="display:none;">
+							<div id="ct-alert" class="alert mb-0"></div>
+						</div>
+
+						<div class="col-12">
+							<button class="btn btn-primary py-3 px-5" type="button"
+									onclick="submitContact()" id="ct-btn">
+								Send Message
+							</button>
+						</div>
+					</div>
 				</div>
-				<div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s"
-					style="min-height: 450px;">
+
+				<div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s" style="min-height: 450px;">
 					<div class="position-relative rounded overflow-hidden h-100">
-						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d235526.94958342306!2d75.69903235924534!3d22.724205000272843!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fcad1b410ddb%3A0x96ec4da356240f4!2sIndore%2C%20Madhya%20Pradesh!5e0!3m2!1sen!2sin!4v1773779462299!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d235526.94958342306!2d75.69903235924534!3d22.724205000272843!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fcad1b410ddb%3A0x96ec4da356240f4!2sIndore%2C%20Madhya%20Pradesh!5e0!3m2!1sen!2sin!4v1773779462299!5m2!1sen!2sin"
+								width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+								referrerpolicy="no-referrer-when-downgrade"></iframe>
 					</div>
 				</div>
 			</div>
@@ -316,6 +326,66 @@
 			setTimeout(() => {
 				window.open('https://medium.com/@TheQuietLedger', '_blank');
 			}, 1000);
+		}
+
+		function submitContact() {
+			const name    = document.getElementById('ct-name').value.trim();
+			const email   = document.getElementById('ct-email').value.trim();
+			const subject = document.getElementById('ct-subject').value.trim();
+			const message = document.getElementById('ct-message').value.trim();
+
+			const statusDiv = document.getElementById('ct-status');
+			const alertDiv  = document.getElementById('ct-alert');
+			const btn       = document.getElementById('ct-btn');
+
+			// Validation
+			if (!name || !email || !subject || !message) {
+				alertDiv.className = 'alert alert-warning mb-0';
+				alertDiv.textContent = '⚠️ Please fill in all fields.';
+				statusDiv.style.display = 'block';
+				return;
+			}
+
+			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			if (!emailRegex.test(email)) {
+				alertDiv.className = 'alert alert-warning mb-0';
+				alertDiv.textContent = '⚠️ Please enter a valid email address.';
+				statusDiv.style.display = 'block';
+				return;
+			}
+
+			// Disable button while sending
+			btn.disabled = true;
+			btn.textContent = 'Sending...';
+
+			const templateParams = {
+				from_name:  name,
+				from_email: email,
+				subject:    subject,
+				message:    message
+			};
+
+			emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_CONTACT_TEMPLATE_ID, templateParams)
+					.then(() => {
+						alertDiv.className = 'alert alert-success mb-0';
+						alertDiv.textContent = '✅ Message sent successfully! We will get back to you soon.';
+						statusDiv.style.display = 'block';
+						btn.textContent = 'Sent ✓';
+
+						// Clear fields
+						document.getElementById('ct-name').value = '';
+						document.getElementById('ct-email').value = '';
+						document.getElementById('ct-subject').value = '';
+						document.getElementById('ct-message').value = '';
+					})
+					.catch((error) => {
+						alertDiv.className = 'alert alert-danger mb-0';
+						alertDiv.textContent = '❌ Failed to send. Please try again later.';
+						statusDiv.style.display = 'block';
+						btn.disabled = false;
+						btn.textContent = 'Send Message';
+						console.error('EmailJS error:', error);
+					});
 		}
 	</script>
 </body>

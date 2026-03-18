@@ -31,3 +31,13 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Hide sensitive files ###
+.env
+application-local.properties
+src/main/resources/application-local.properties
+src/main/resources/static/js/config.js
+
+### Hide OS files ###
+.DS_Store
+Thumbs.db

@@ -9,4 +9,6 @@ import com.taxgenie.model.User;
 public interface UserRepository extends JpaRepository<User,Integer> {
 
 	Optional<User> findUserByEmail(String email);
+	User findByResetToken(String resetToken);
+	User findByEmail(String email);
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
 <meta charset="utf-8">
@@ -120,15 +120,23 @@
 							Calculator</a>
 						</div>
 					</div>
-
 					<div class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle"
 						   data-bs-toggle="dropdown">Join Us</a>
 						<div class="dropdown-menu border-light m-0">
+
+							<!-- Show Sign-In and Sign-Up only when NOT logged in -->
 							<a sec:authorize="isAnonymous()" th:href="@{/login}"
-							   href="login.html" class="dropdown-item">Sign-In</a> <a
-								th:href="@{/register}" href="register.html"
-								class="dropdown-item">Sign-Up</a>
+							   href="login.html" class="dropdown-item">Sign-In</a>
+							<a sec:authorize="isAnonymous()" th:href="@{/register}"
+							   href="register.html" class="dropdown-item">Sign-Up</a>
+
+							<!-- Show Logout only when logged in (no CSRF token needed) -->
+							<a sec:authorize="isAuthenticated()" th:href="@{/logout}"
+							   class="dropdown-item text-danger">
+								<i class="fa fa-sign-out-alt me-2"></i>Logout
+							</a>
+
 						</div>
 					</div>
 				</div>
@@ -138,41 +146,60 @@
 	<!-- Navbar End -->
 
 	<!-- Register Form Start -->
-	<div class="form-container">
-		<h3>Sign Up Now</h3>
-		<p>Please fill out this form to register</p>
-		<form th:action="@{/register}" th:object="${user}" method="post">
-			<div class="form-group">
-				<label for="firstName">First Name</label> <input type="text"
-					name="firstName" id="firstName" required
-					placeholder="Your Firstname" class="form-control form-control-lg">
+	<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh; margin-top: 120px;">
+		<div class="card shadow-lg p-4" style="max-width: 500px; width: 100%; border-radius: 15px;">
+
+			<div class="text-center mb-4">
+				<h3 class="fw-bold text-primary">Create Account</h3>
+				<p class="text-muted">Join TaxGenie and simplify your taxes 🚀</p>
 			</div>
-			<div class="form-group">
-				<label for="lastName">Last Name</label> <input type="text"
-					name="lastName" id="lastName" required placeholder="Your Lastname"
-					class="form-control form-control-lg">
-			</div>
-			
-			
-			<div class="form-group">
-				<label for="email">Email address</label> <input type="email"
-					class="form-control form-control-lg" required minlength="6"
-					placeholder="Email" name="email" id="email"> <small
-					id="emailHelp" class="form-text text-muted">We'll never
-					share your email with anyone else.</small>
-			</div>
-			
-			<div class="form-group">
-				<label for="password">Password</label> <input type="password"
-					class="form-control form-control-lg" required
-					placeholder="Password" name="password" id="password">
-			</div>
-			<input type="submit" value="Register"
-				class="btn btn-primary btn-block"> <span
-				style="margin-top: 10px">Already have an account <a
-				class="linkControl" href="./login.html" th:href="@{/login}">Login
-					here</a></span>
-		</form>
+
+			<form th:action="@{/register}" th:object="${user}" method="post">
+
+				<div class="row">
+					<div class="col-md-6 mb-3">
+						<label class="form-label">First Name</label>
+						<input type="text" name="firstName" required
+							   class="form-control form-control-lg rounded-pill"
+							   placeholder="First Name">
+					</div>
+
+					<div class="col-md-6 mb-3">
+						<label class="form-label">Last Name</label>
+						<input type="text" name="lastName" required
+							   class="form-control form-control-lg rounded-pill"
+							   placeholder="Last Name">
+					</div>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label">Email Address</label>
+					<input type="email" name="email" required minlength="6"
+						   class="form-control form-control-lg rounded-pill"
+						   placeholder="Enter your email">
+					<small class="text-muted">We’ll never share your email.</small>
+				</div>
+
+				<div class="mb-4">
+					<label class="form-label">Password</label>
+					<input type="password" name="password" required
+						   class="form-control form-control-lg rounded-pill"
+						   placeholder="Create a strong password">
+				</div>
+
+				<div class="d-grid mb-3">
+					<button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm">
+						Register
+					</button>
+				</div>
+
+				<div class="text-center">
+					<span class="text-muted">Already have an account?</span>
+					<a th:href="@{/login}" class="fw-bold text-primary"> Login</a>
+				</div>
+
+			</form>
+		</div>
 	</div>
 	<!-- Register Form End -->
 
