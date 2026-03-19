@@ -233,6 +233,11 @@ Contributions are welcome! Please follow these steps:
 [![Twitter](https://img.shields.io/badge/Twitter-parasjain8103-1DA1F2?style=flat&logo=twitter)](https://x.com/parasjain8103)
 [![Medium](https://img.shields.io/badge/Medium-TheQuietLedger-black?style=flat&logo=medium)](https://medium.com/@TheQuietLedger)
 
+**Manas Rathore**
+
+[![GitHub](https://img.shields.io/badge/GitHub-manas--rathore-black?style=flat&logo=github)](https://github.com/manas-rathore)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-manas--rathore1-blue?style=flat&logo=linkedin)](https://linkedin.com/in/manas-rathore1)
+
 ---
 
 ## 📄 License
@@ -243,7 +248,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 📬 Contact
 
-For any queries, reach out at **taxgenie.fin@gmail.com** or use the [Contact Us](http://localhost:8080/contact) page on the website.
+For any queries, reach out at **parasjain8103@gmail.com** or use the [Contact Us](https://parasjain12.github.io/parasjain.github.io/) page on the website.
 
 ---
 
