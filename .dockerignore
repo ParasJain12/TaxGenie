@@ -5,3 +5,7 @@ target/
 *.md
 *.log
 *.txt
+.gitignore
+.env
+application-local.properties
+src/main/resources/static/js/config.js

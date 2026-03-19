@@ -23,15 +23,31 @@ services:
   app:
     build: .
     container_name: taxgenie
+    restart: always
     depends_on:
       db:
         condition: service_healthy
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/taxgenie
+      # Database
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/taxgenie?allowPublicKeyRetrieval=true&useSSL=false
       SPRING_DATASOURCE_USERNAME: taxuser
       SPRING_DATASOURCE_PASSWORD: taxpass
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+
+      # JPA
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL8Dialect
+
+      # Mail
+      SPRING_MAIL_HOST: smtp.gmail.com
+      SPRING_MAIL_PORT: 587
+      SPRING_MAIL_USERNAME: taxgenie.fin@gmail.com
+      SPRING_MAIL_PASSWORD: ${MAIL_PASSWORD}
+
+      # News API
+      NEWSAPI_KEY: ${NEWS_API_KEY}
 
 volumes:
   mysql_data:

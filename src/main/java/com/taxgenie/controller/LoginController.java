@@ -73,7 +73,7 @@ public class LoginController {
 		// Send email
 		String resetLink = "http://localhost:8080/resetpassword?token=" + token;
 		SimpleMailMessage message = new SimpleMailMessage();
-		message.setFrom("taxgenie.fin@gmail.com");
+		message.setFrom("jainsahabparas678@gmail.com");
 		message.setTo(user.getEmail());
 		message.setSubject("TaxGenie - Password Reset Request");
 		message.setText("Hello " + user.getFirstName() + ",\n\n"
