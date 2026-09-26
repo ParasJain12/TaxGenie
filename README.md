@@ -248,7 +248,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 📬 Contact
 
-For any queries, reach out at **parasjain8103@gmail.com** or use the [Contact Us](https://parasjain12.github.io/parasjain.github.io/) page on the website.
+For any queries, reach out at **parasjain8103@gmail.com** or use the [Contact Us](https://parasjain12.github.io/) page on the website.
 
 ---
 
